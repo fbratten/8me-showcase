@@ -16,3 +16,9 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Local/sensitive files
+.spine/
+ai-memory/
+*.local.md
+CLAUDE.md
