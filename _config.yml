@@ -1,0 +1,57 @@
+# 8me Showcase - Jekyll Configuration
+
+title: 8me Showcase
+description: Educational platform for learning AI agent orchestration
+author: fbratten
+baseurl: "/8me-showcase"
+url: "https://fbratten.github.io"
+
+# Theme
+theme: minima
+markdown: kramdown
+
+# Code repository for linking
+code_repo: "https://github.com/fbratten/8me"
+
+# Navigation
+header_pages:
+  - docs/tutorials/index.md
+  - docs/concepts/index.md
+  - labs/index.md
+  - about.md
+
+# Collections
+collections:
+  labs:
+    output: true
+    permalink: /labs/:name/
+  tutorials:
+    output: true
+    permalink: /tutorials/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: "labs"
+      type: "labs"
+    values:
+      layout: "lab"
+  - scope:
+      path: "docs/tutorials"
+    values:
+      layout: "tutorial"
+  - scope:
+      path: "docs/concepts"
+    values:
+      layout: "concept"
+
+# Build settings
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# GitHub metadata
+github:
+  repo: fbratten/8me-showcase
