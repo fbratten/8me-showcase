@@ -838,6 +838,6 @@ Full implementation: [8me/src/tier1-ralph-loop/claude_tools.py](https://github.c
 ---
 
 <div class="lab-navigation">
-  <a href="./04-json-tasks.md" class="prev">← Previous: Lab 04 - JSON Task Management</a>
-  <a href="./06-circuit-breakers.md" class="next">Next: Lab 06 - Circuit Breakers →</a>
+  <a href="./04-json-tasks" class="prev">← Previous: Lab 04 - JSON Task Management</a>
+  <a href="./06-circuit-breakers" class="next">Next: Lab 06 - Circuit Breakers →</a>
 </div>

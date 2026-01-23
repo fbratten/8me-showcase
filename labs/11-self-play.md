@@ -817,6 +817,6 @@ Related concepts: [8me/src/tier3.5-orchestration-concepts/02-patterns.md](https:
 ---
 
 <div class="lab-navigation">
-  <a href="./10-gating.md" class="prev">← Previous: Lab 10 - Gating and Drift Prevention</a>
-  <a href="./12-memory.md" class="next">Next: Lab 12 - Memory Integration →</a>
+  <a href="./10-gating" class="prev">← Previous: Lab 10 - Gating and Drift Prevention</a>
+  <a href="./12-memory" class="next">Next: Lab 12 - Memory Integration →</a>
 </div>

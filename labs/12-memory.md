@@ -955,6 +955,6 @@ Related concepts: [8me/src/tier3.5-orchestration-concepts/05-minna-memory.md](ht
 ---
 
 <div class="lab-navigation">
-  <a href="./11-self-play.md" class="prev">← Previous: Lab 11 - Self-Play Oscillation</a>
-  <a href="./13-mcp-server.md" class="next">Next: Lab 13 - MCP Server Deployment →</a>
+  <a href="./11-self-play" class="prev">← Previous: Lab 11 - Self-Play Oscillation</a>
+  <a href="./13-mcp-server" class="next">Next: Lab 13 - MCP Server Deployment →</a>
 </div>

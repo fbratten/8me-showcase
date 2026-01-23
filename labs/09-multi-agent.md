@@ -835,6 +835,6 @@ Related implementation: [8me/src/tier3.5-orchestration-concepts/02-patterns.md](
 ---
 
 <div class="lab-navigation">
-  <a href="./08-orchestrator.md" class="prev">← Previous: Lab 08 - Building an Orchestrator</a>
-  <a href="./10-gating.md" class="next">Next: Lab 10 - Gating and Drift Prevention →</a>
+  <a href="./08-orchestrator" class="prev">← Previous: Lab 08 - Building an Orchestrator</a>
+  <a href="./10-gating" class="next">Next: Lab 10 - Gating and Drift Prevention →</a>
 </div>

@@ -1064,6 +1064,6 @@ Full implementation: [8me/src/tier1-ralph-loop/](https://github.com/fbratten/8me
 ---
 
 <div class="lab-navigation">
-  <a href="./07-confidence-retry.md" class="prev">← Previous: Lab 07 - Confidence Retry</a>
-  <a href="./09-multi-agent.md" class="next">Next: Lab 09 - Multi-Agent Patterns →</a>
+  <a href="./07-confidence-retry" class="prev">← Previous: Lab 07 - Confidence Retry</a>
+  <a href="./09-multi-agent" class="next">Next: Lab 09 - Multi-Agent Patterns →</a>
 </div>

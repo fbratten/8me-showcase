@@ -86,4 +86,4 @@ ralph-mcp
 
 ---
 
-<a href="/labs/01-first-loop.md" class="button primary">Start with Your First Loop →</a>
+<a href="/labs/01-first-loop" class="button primary">Start with Your First Loop →</a>

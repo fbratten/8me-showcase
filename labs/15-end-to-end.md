@@ -844,6 +844,6 @@ Complete implementation: [8me repository](https://github.com/fbratten/8me)
 ---
 
 <div class="lab-navigation">
-  <a href="./14-skill.md" class="prev">← Previous: Lab 14 - Claude Code Skill</a>
+  <a href="./14-skill" class="prev">← Previous: Lab 14 - Claude Code Skill</a>
   <span class="next">🎉 Curriculum Complete!</span>
 </div>

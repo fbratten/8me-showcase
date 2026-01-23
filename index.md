@@ -57,7 +57,7 @@ The name comes from a methodology popularized by Geoffrey Huntley: **loop persis
 
 A musical tribute to context engineering and autonomous loops.
 
-<a href="./demos/spine-song.md">
+<a href="./demos/spine-song">
   <img src="https://fbratten.github.io/music-video-creator-showcase/screenshots/showcase_sphere_lyrics.gif" alt="SPINE Song Preview" style="max-width: 300px; border-radius: 8px;">
 </a>
 

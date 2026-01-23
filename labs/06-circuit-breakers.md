@@ -763,6 +763,6 @@ Full implementation: [8me/src/tier1-ralph-loop/circuit_breaker.py](https://githu
 ---
 
 <div class="lab-navigation">
-  <a href="./05-tool-calling.md" class="prev">← Previous: Lab 05 - Tool Calling</a>
-  <a href="./07-confidence-retry.md" class="next">Next: Lab 07 - Confidence Retry →</a>
+  <a href="./05-tool-calling" class="prev">← Previous: Lab 05 - Tool Calling</a>
+  <a href="./07-confidence-retry" class="next">Next: Lab 07 - Confidence Retry →</a>
 </div>

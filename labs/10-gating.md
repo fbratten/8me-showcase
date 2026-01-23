@@ -957,6 +957,6 @@ Related concepts: [8me/src/tier3.5-orchestration-concepts/02-patterns.md](https:
 ---
 
 <div class="lab-navigation">
-  <a href="./09-multi-agent.md" class="prev">← Previous: Lab 09 - Multi-Agent Patterns</a>
-  <a href="./11-self-play.md" class="next">Next: Lab 11 - Self-Play Oscillation →</a>
+  <a href="./09-multi-agent" class="prev">← Previous: Lab 09 - Multi-Agent Patterns</a>
+  <a href="./11-self-play" class="next">Next: Lab 11 - Self-Play Oscillation →</a>
 </div>

@@ -758,6 +758,6 @@ Full implementation: [8me/src/tier1-ralph-loop/task_manager.py](https://github.c
 ---
 
 <div class="lab-navigation">
-  <a href="./03-verification.md" class="prev">← Previous: Lab 03 - Simple Verification</a>
-  <a href="./05-tool-calling.md" class="next">Next: Lab 05 - Tool Calling →</a>
+  <a href="./03-verification" class="prev">← Previous: Lab 03 - Simple Verification</a>
+  <a href="./05-tool-calling" class="next">Next: Lab 05 - Tool Calling →</a>
 </div>

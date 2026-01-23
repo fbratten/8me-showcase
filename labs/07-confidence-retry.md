@@ -693,6 +693,6 @@ Full implementation: [8me/src/tier1-ralph-loop/](https://github.com/fbratten/8me
 ---
 
 <div class="lab-navigation">
-  <a href="./06-circuit-breakers.md" class="prev">← Previous: Lab 06 - Circuit Breakers</a>
-  <a href="./08-orchestrator.md" class="next">Next: Lab 08 - Building an Orchestrator →</a>
+  <a href="./06-circuit-breakers" class="prev">← Previous: Lab 06 - Circuit Breakers</a>
+  <a href="./08-orchestrator" class="next">Next: Lab 08 - Building an Orchestrator →</a>
 </div>

@@ -570,6 +570,6 @@ Full implementation: [8me/src/tier2-ralph-skill/](https://github.com/fbratten/8m
 ---
 
 <div class="lab-navigation">
-  <a href="./13-mcp-server.md" class="prev">← Previous: Lab 13 - MCP Server Deployment</a>
-  <a href="./15-end-to-end.md" class="next">Next: Lab 15 - End-to-End Workflow →</a>
+  <a href="./13-mcp-server" class="prev">← Previous: Lab 13 - MCP Server Deployment</a>
+  <a href="./15-end-to-end" class="next">Next: Lab 15 - End-to-End Workflow →</a>
 </div>

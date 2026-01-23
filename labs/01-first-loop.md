@@ -234,5 +234,5 @@ Full implementation: [8me/src/tier0-hello-world/](https://github.com/fbratten/8m
 
 <div class="lab-navigation">
   <span class="prev">← Previous: None (this is Lab 01)</span>
-  <a href="./02-external-state.md" class="next">Next: Lab 02 - External State →</a>
+  <a href="./02-external-state" class="next">Next: Lab 02 - External State →</a>
 </div>

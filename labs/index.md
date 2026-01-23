@@ -126,4 +126,4 @@ All lab code is available in the [8me repository](https://github.com/fbratten/8m
 
 ---
 
-<a href="./01-first-loop.md" class="button primary">Start Lab 01 →</a>
+<a href="./01-first-loop" class="button primary">Start Lab 01 →</a>

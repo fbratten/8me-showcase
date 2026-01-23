@@ -433,6 +433,6 @@ The Tier 1 implementation extends this pattern with verification, retries, and c
 ---
 
 <div class="lab-navigation">
-  <a href="./01-first-loop.md" class="prev">← Previous: Lab 01 - Your First Loop</a>
-  <a href="./03-verification.md" class="next">Next: Lab 03 - Simple Verification →</a>
+  <a href="./01-first-loop" class="prev">← Previous: Lab 01 - Your First Loop</a>
+  <a href="./03-verification" class="next">Next: Lab 03 - Simple Verification →</a>
 </div>

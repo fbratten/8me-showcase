@@ -609,6 +609,6 @@ Full implementation: [8me/src/tier3-mcp-server/](https://github.com/fbratten/8me
 ---
 
 <div class="lab-navigation">
-  <a href="./12-memory.md" class="prev">← Previous: Lab 12 - Memory Integration</a>
-  <a href="./14-skill.md" class="next">Next: Lab 14 - Claude Code Skill →</a>
+  <a href="./12-memory" class="prev">← Previous: Lab 12 - Memory Integration</a>
+  <a href="./14-skill" class="next">Next: Lab 14 - Claude Code Skill →</a>
 </div>

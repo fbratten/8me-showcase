@@ -606,6 +606,6 @@ The Tier 1 implementation includes verification via tool calling (Lab 05) and ci
 ---
 
 <div class="lab-navigation">
-  <a href="./02-external-state.md" class="prev">← Previous: Lab 02 - External State</a>
-  <a href="./04-json-tasks.md" class="next">Next: Lab 04 - JSON Task Management →</a>
+  <a href="./02-external-state" class="prev">← Previous: Lab 02 - External State</a>
+  <a href="./04-json-tasks" class="next">Next: Lab 04 - JSON Task Management →</a>
 </div>
