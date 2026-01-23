@@ -1,13 +1,18 @@
-# Jekyll
+# Jekyll / Just-the-Docs
 _site/
 .sass-cache/
 .jekyll-cache/
 .jekyll-metadata
+Gemfile.lock
 
 # Ruby
 *.gem
 .bundle/
 vendor/
+
+# Node (if using any JS tooling)
+node_modules/
+package-lock.json
 
 # OS
 .DS_Store
@@ -25,3 +30,7 @@ ai-memory/
 KB/
 .spine/
 *.local.md
+
+# Temp scripts
+*.py
+!_plugins/*.py
