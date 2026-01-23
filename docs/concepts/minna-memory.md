@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Minna Memory
+permalink: /concepts/minna-memory/
 parent: Concepts
 ---
 

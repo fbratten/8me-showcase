@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Circuit Breakers
+permalink: /concepts/circuit-breakers/
 parent: Concepts
 ---
 

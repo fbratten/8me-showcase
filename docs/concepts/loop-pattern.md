@@ -1,6 +1,7 @@
 ---
 layout: page
 title: The Loop Pattern
+permalink: /concepts/loop-pattern/
 parent: Concepts
 ---
 

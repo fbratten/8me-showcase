@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Setting Up MCP
+permalink: /tutorials/mcp-setup/
 parent: Tutorials
 ---
 

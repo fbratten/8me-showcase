@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 1 Safety Features
+permalink: /tutorials/tier1-safety/
 parent: Tutorials
 ---
 

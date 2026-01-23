@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Verification Strategies
+permalink: /concepts/verification/
 parent: Concepts
 ---
 

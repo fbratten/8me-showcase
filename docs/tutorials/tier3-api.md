@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 3 API
+permalink: /tutorials/tier3-api/
 parent: Tutorials
 ---
 

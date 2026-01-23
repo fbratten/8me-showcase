@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Multi-Agent Coordination
+permalink: /concepts/multi-agent/
 parent: Concepts
 ---
 

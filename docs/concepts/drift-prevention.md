@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Drift Prevention
+permalink: /concepts/drift-prevention/
 parent: Concepts
 ---
 

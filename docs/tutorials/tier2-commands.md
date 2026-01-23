@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 2 Commands
+permalink: /tutorials/tier2-commands/
 parent: Tutorials
 ---
 

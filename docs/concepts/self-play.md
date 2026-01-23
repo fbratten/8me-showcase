@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Self-Play & Oscillation
+permalink: /concepts/self-play/
 parent: Concepts
 ---
 

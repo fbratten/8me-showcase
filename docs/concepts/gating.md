@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Gating Mechanisms
+permalink: /concepts/gating/
 parent: Concepts
 ---
 

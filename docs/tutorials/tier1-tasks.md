@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 1 Task Management
+permalink: /tutorials/tier1-tasks/
 parent: Tutorials
 ---
 

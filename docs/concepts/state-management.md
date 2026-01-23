@@ -1,6 +1,7 @@
 ---
 layout: page
 title: State Management
+permalink: /concepts/state-management/
 parent: Concepts
 ---
 

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 0 Explained
+permalink: /tutorials/tier0-explained/
 parent: Tutorials
 ---
 

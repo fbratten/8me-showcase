@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 0 Quickstart
+permalink: /tutorials/tier0-quickstart/
 parent: Tutorials
 ---
 

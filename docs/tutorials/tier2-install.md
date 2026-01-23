@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 2 Install
+permalink: /tutorials/tier2-install/
 parent: Tutorials
 ---
 

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 3 Config
+permalink: /tutorials/tier3-config/
 parent: Tutorials
 ---
 

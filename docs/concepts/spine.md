@@ -1,6 +1,7 @@
 ---
 layout: page
 title: SPINE Integration
+permalink: /concepts/spine/
 parent: Concepts
 ---
 

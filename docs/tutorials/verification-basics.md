@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Understanding Verification
+permalink: /tutorials/verification-basics/
 parent: Tutorials
 ---
 

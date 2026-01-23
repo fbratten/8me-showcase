@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Tier 1 CLI Usage
+permalink: /tutorials/tier1-cli/
 parent: Tutorials
 ---
 

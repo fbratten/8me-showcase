@@ -39,11 +39,11 @@ defaults:
   - scope:
       path: "docs/tutorials"
     values:
-      layout: "tutorial"
+      layout: "page"
   - scope:
       path: "docs/concepts"
     values:
-      layout: "concept"
+      layout: "page"
 
 # Build settings
 exclude:

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Provider Overview
+permalink: /concepts/providers/
 parent: Concepts
 ---
 
