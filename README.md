@@ -104,14 +104,12 @@ bundle exec jekyll serve
 
 ## Contributing
 
-- **Content improvements**: PRs welcome to this repo
-- **Code improvements**: PRs to [8me repo](https://github.com/fbratten/8me)
-- **Bug reports**: Issues on either repo
+This is a personal educational project. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
 ## License
 
-MIT License - See LICENSE file
+MIT License - See [LICENSE](./LICENSE) file for details.
 
 ---
 
-*Part of the SPINE ecosystem*
+*Part of the [Adaptivearts.ai™](https://adaptivearts.ai) research initiative*
