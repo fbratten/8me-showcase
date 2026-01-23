@@ -88,6 +88,8 @@ The "Ralph Wiggum" methodology teaches that success comes from:
 
 *For the AI nerds:* This loop-until-done pattern was the common approach before sophisticated orchestration frameworks. Sometimes the old ways persist because they work.
 
+> **Note:** Labs contain *pedagogical variations* with richer abstractions (interfaces, hooks, builders) optimized for teaching concepts layer-by-layer. The [8me source repo](https://github.com/fbratten/8me) contains the "mundane" working implementations optimized for actual use.
+
 ## Local Development
 
 ```bash
