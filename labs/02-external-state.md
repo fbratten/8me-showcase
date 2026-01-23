@@ -95,7 +95,7 @@ Enables resume capability after script restarts.
 
 import json
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 
 class StateManager:
@@ -103,7 +103,7 @@ class StateManager:
 
     def __init__(self, filepath: str = "state.json"):
         self.filepath = Path(filepath)
-        self.tasks: list[dict] = []
+        self.tasks: List[dict] = []
         self._load()
 
     def _load(self):
@@ -142,7 +142,7 @@ class StateManager:
                 if description:
                     self.add_task(description)
 
-    def get_pending(self) -> list[dict]:
+    def get_pending(self) -> List[dict]:
         """Return all pending tasks."""
         return [t for t in self.tasks if t["status"] == "pending"]
 

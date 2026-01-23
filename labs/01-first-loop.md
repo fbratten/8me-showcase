@@ -79,13 +79,14 @@ This script demonstrates the core loop pattern:
 4. Loop until all tasks are done
 """
 
+from typing import List
 import anthropic
 
 # Initialize the Claude client
 client = anthropic.Anthropic()
 
 
-def read_tasks(filepath: str) -> list[str]:
+def read_tasks(filepath: str) -> List[str]:
     """Read tasks from a file, one per line."""
     with open(filepath, "r") as f:
         tasks = [line.strip() for line in f if line.strip()]

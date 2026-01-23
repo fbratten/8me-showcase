@@ -73,5 +73,5 @@ A musical tribute to context engineering and autonomous loops.
 ---
 
 <p align="center">
-  <sub>Part of the <a href="https://adaptivearts.ai"><b>Adaptivearts.ai™</b></a> research initiative</sub>
+  <sub>Part of the <a href="https://github.com/fbratten/8me"><b>8me</b></a> autonomous loop toolkit & <a href="https://adaptivearts.ai"><b>Adaptivearts.ai™</b></a> initiative</sub>
 </p>

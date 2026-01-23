@@ -104,7 +104,7 @@ Self-Play Engine - Lab 11
 Implements proposer/critic feedback loops with convergence detection.
 """
 
-from typing import Optional, List, Callable
+from typing import Dict, Optional, List, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 import anthropic
@@ -416,7 +416,7 @@ class OscillationPreventer:
     """
 
     def __init__(self):
-        self.seen_proposals: dict[str, float] = {}  # hash -> score
+        self.seen_proposals: Dict[str, float] = {}  # hash -> score
         self.oscillation_count: int = 0
 
     def record_proposal(self, proposal_hash: str, score: float):

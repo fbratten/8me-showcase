@@ -114,4 +114,4 @@ MIT License - See [LICENSE](./LICENSE) file for details.
 
 ---
 
-*Part of the [Adaptivearts.ai™](https://adaptivearts.ai) research initiative*
+*Part of the [8me](https://github.com/fbratten/8me) autonomous loop toolkit & Adaptivearts.ai™ initiative*

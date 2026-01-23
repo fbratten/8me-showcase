@@ -74,7 +74,7 @@ Adaptive confidence-based retry decisions.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional, Tuple, List
+from typing import Dict, Optional, Tuple, List
 from enum import Enum
 
 
@@ -175,7 +175,7 @@ class ConfidenceManager:
 
     def __init__(self, config: Optional[ConfidenceConfig] = None):
         self.config = config or ConfidenceConfig()
-        self.task_states: dict[str, TaskConfidenceState] = {}
+        self.task_states: Dict[str, TaskConfidenceState] = {}
 
     def evaluate(
         self,

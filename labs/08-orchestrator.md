@@ -226,7 +226,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional, Callable, List
+from typing import Dict, Optional, Callable, List
 import time
 
 from interfaces import (
@@ -308,7 +308,7 @@ class Orchestrator:
         self.stats = OrchestratorStats()
 
         # Lifecycle hooks
-        self._hooks: dict[str, List[Hook]] = {
+        self._hooks: Dict[str, List[Hook]] = {
             "on_task_start": [],
             "on_task_complete": [],
             "on_task_fail": [],
@@ -478,7 +478,7 @@ class OrchestratorBuilder:
         self._verifier = None
         self._safety = None
         self._config = None
-        self._hooks: dict[str, List[Hook]] = {}
+        self._hooks: Dict[str, List[Hook]] = {}
 
     def with_task_store(self, store: TaskStore) -> "OrchestratorBuilder":
         self._task_store = store
@@ -594,7 +594,7 @@ class InMemoryTaskStore(TaskStore):
     """In-memory task store - great for testing and learning."""
 
     def __init__(self, tasks: Optional[List[Task]] = None):
-        self.tasks: dict[str, Task] = {}
+        self.tasks: Dict[str, Task] = {}
         if tasks:
             for task in tasks:
                 self.tasks[task.id] = task
@@ -634,7 +634,7 @@ class JSONTaskStore(TaskStore):
 
     def __init__(self, filepath: str = "tasks.json"):
         self.filepath = Path(filepath)
-        self.tasks: dict[str, Task] = {}
+        self.tasks: Dict[str, Task] = {}
         self._load()
 
     def _load(self):
