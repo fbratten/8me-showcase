@@ -69,3 +69,9 @@ A musical tribute to context engineering and autonomous loops.
 ---
 
 [**Start Learning →**](./labs/01-first-loop.md) · [**View Code →**](https://github.com/fbratten/8me)
+
+---
+
+<p align="center">
+  <sub>Part of the <a href="https://adaptivearts.ai"><b>Adaptivearts.ai™</b></a> research initiative</sub>
+</p>
