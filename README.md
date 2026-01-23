@@ -47,9 +47,9 @@ This repository contains **educational content** with links to the **code reposi
 
 ## Quick Start
 
-1. **Brand new to loops?** → Start with [Your First Loop](./docs/tutorials/first-loop.md)
+1. **Brand new to loops?** → Start with [Your First Loop](./labs/01-first-loop.md)
 2. **Want working code?** → Visit [8me repository](https://github.com/fbratten/8me)
-3. **Learning patterns?** → Read [Orchestration Concepts](./docs/concepts/orchestration.md)
+3. **Learning patterns?** → Read [Orchestration Concepts](./docs/concepts/)
 4. **Hands-on practice?** → Try [Lab 01](./labs/01-first-loop.md)
 
 ## Labs Curriculum

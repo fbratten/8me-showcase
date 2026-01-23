@@ -28,7 +28,7 @@ You get **reliable automation**.
 
 | | |
 |---|---|
-| **🚀 Quick Start** | New to loops? [Your First Loop Tutorial](./docs/tutorials/first-loop.md) |
+| **🚀 Quick Start** | New to loops? [Your First Loop Tutorial](./labs/01-first-loop.md) |
 | **📚 Concepts** | Understand the theory: [Orchestration Concepts](./docs/concepts/) |
 | **🧪 Labs** | Hands-on practice: [Lab Curriculum](./labs/index.md) (15 progressive labs) |
 | **💻 Code** | Working implementations: [8me Repository](https://github.com/fbratten/8me) |
@@ -65,4 +65,4 @@ A musical tribute to context engineering and autonomous loops.
 
 ---
 
-[**Start Learning →**](./docs/tutorials/first-loop.md) · [**View Code →**](https://github.com/fbratten/8me)
+[**Start Learning →**](./labs/01-first-loop.md) · [**View Code →**](https://github.com/fbratten/8me)
