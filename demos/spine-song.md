@@ -39,7 +39,7 @@ The genre mix mirrors the coding experience - smooth flow punctuated by breakthr
 
 ## Created With
 
-**Visuals:** [Music Video Creator](https://github.com/fbratten/music-video-creator-showcase)
+**Visuals:** [Music Video Creator](https://fbratten.github.io/music-video-creator-showcase/demos/)
 - STFT audio analysis
 - Beat detection
 - Reactive disk GPU style

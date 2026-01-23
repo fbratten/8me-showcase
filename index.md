@@ -32,7 +32,7 @@ You get **reliable automation**.
 New to loops? [Your First Loop Tutorial](./docs/tutorials/first-loop.md) takes 15 minutes.
 
 ### 📚 Concepts
-Understand the theory: [Orchestration Concepts](./docs/concepts/orchestration.md)
+Understand the theory: [Orchestration Concepts](./docs/concepts/)
 
 ### 🧪 Labs
 Hands-on practice: [Lab Curriculum](./labs/index.md) (15 progressive labs)
