@@ -12,7 +12,7 @@ Quick-start guides to get you up and running.
 
 ## Getting Started
 
-### [Your First Loop](/labs/01-first-loop.md)
+### [Your First Loop](../labs/01-first-loop)
 15-minute introduction to AI loops. Build a working loop from scratch.
 
 ### [Understanding Verification](./verification-basics.md)
@@ -86,4 +86,4 @@ ralph-mcp
 
 ---
 
-<a href="/labs/01-first-loop" class="button primary">Start with Your First Loop →</a>
+<a href="../labs/01-first-loop" class="button primary">Start with Your First Loop →</a>
