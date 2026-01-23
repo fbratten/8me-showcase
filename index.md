@@ -60,6 +60,20 @@ The name comes from a methodology popularized by Geoffrey Huntley: **loop persis
 
 ---
 
+## Featured
+
+### Coding Flow State - SPINE
+
+A musical tribute to context engineering and autonomous loops.
+
+<a href="./demos/spine-song.md">
+  <img src="https://fbratten.github.io/music-video-creator-showcase/screenshots/showcase_sphere_lyrics.gif" alt="SPINE Song Preview" style="max-width: 300px; border-radius: 8px;">
+</a>
+
+[Watch the full video →](./demos/spine-song.md)
+
+---
+
 <div class="cta-buttons">
   <a href="./docs/tutorials/first-loop.md" class="button primary">Start Learning →</a>
   <a href="https://github.com/fbratten/8me" class="button secondary">View Code →</a>
