@@ -17,8 +17,11 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Local/sensitive files
-.spine/
-ai-memory/
-*.local.md
+# Local AI/development context (not for public repo)
+NEXT.md
 CLAUDE.md
+archived/
+ai-memory/
+KB/
+.spine/
+*.local.md
