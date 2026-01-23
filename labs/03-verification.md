@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 03: Simple Verification"
+nav_order: 3
+parent: Labs
 lab_number: 3
 difficulty: beginner
 time: 45 minutes

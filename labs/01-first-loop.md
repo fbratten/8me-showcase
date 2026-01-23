@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 01: Your First Loop"
+nav_order: 1
+parent: Labs
 lab_number: 1
 difficulty: beginner
 time: 30 minutes

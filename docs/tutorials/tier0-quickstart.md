@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 0 Quickstart
-permalink: /tutorials/tier0-quickstart/
+nav_order: 3
 parent: Tutorials
+permalink: /tutorials/tier0-quickstart/
 ---
 
 # Tier 0: Hello World Quickstart

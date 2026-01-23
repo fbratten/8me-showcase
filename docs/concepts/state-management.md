@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: State Management
-permalink: /concepts/state-management/
+nav_order: 4
 parent: Concepts
+permalink: /concepts/state-management/
 ---
 
 # State Management

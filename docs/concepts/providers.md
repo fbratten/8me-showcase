@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Provider Overview
-permalink: /concepts/providers/
+nav_order: 9
 parent: Concepts
+permalink: /concepts/providers/
 ---
 
 # Provider Overview

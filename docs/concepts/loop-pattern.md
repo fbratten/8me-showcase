@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: The Loop Pattern
-permalink: /concepts/loop-pattern/
+nav_order: 1
 parent: Concepts
+permalink: /concepts/loop-pattern/
 ---
 
 # The Loop Pattern

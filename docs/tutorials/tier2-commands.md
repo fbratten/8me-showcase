@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 2 Commands
-permalink: /tutorials/tier2-commands/
+nav_order: 9
 parent: Tutorials
+permalink: /tutorials/tier2-commands/
 ---
 
 # Tier 2: Using Ralph Commands

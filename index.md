@@ -1,6 +1,9 @@
 ---
-layout: home
+layout: default
 title: Home
+nav_order: 1
+permalink: /
+description: "Learn AI Agent Orchestration"
 ---
 
 # Learn AI Agent Orchestration

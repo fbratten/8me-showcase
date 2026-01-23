@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Setting Up MCP
-permalink: /tutorials/mcp-setup/
+nav_order: 2
 parent: Tutorials
+permalink: /tutorials/mcp-setup/
 ---
 
 # Setting Up MCP

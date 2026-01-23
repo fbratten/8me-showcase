@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 02: External State"
+nav_order: 2
+parent: Labs
 lab_number: 2
 difficulty: beginner
 time: 45 minutes

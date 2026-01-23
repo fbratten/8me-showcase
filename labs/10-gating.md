@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 10: Gating and Drift Prevention"
+nav_order: 10
+parent: Labs
 lab_number: 10
 difficulty: advanced
 time: 1.5 hours

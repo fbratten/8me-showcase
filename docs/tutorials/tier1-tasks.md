@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 1 Task Management
-permalink: /tutorials/tier1-tasks/
+nav_order: 6
 parent: Tutorials
+permalink: /tutorials/tier1-tasks/
 ---
 
 # Tier 1: Task Management

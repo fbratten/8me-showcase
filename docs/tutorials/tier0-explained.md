@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 0 Explained
-permalink: /tutorials/tier0-explained/
+nav_order: 4
 parent: Tutorials
+permalink: /tutorials/tier0-explained/
 ---
 
 # Tier 0: Understanding the Code

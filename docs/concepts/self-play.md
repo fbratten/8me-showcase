@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Self-Play & Oscillation
-permalink: /concepts/self-play/
+nav_order: 5
 parent: Concepts
+permalink: /concepts/self-play/
 ---
 
 # Self-Play & Oscillation

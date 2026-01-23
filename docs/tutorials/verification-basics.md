@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Understanding Verification
-permalink: /tutorials/verification-basics/
+nav_order: 1
 parent: Tutorials
+permalink: /tutorials/verification-basics/
 ---
 
 # Understanding Verification

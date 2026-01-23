@@ -1,6 +1,8 @@
 ---
-layout: page
-title: Labs Curriculum
+layout: default
+title: Labs
+nav_order: 2
+has_children: true
 permalink: /labs/
 ---
 

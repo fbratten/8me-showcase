@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 13: MCP Server Deployment"
+nav_order: 13
+parent: Labs
 lab_number: 13
 difficulty: integration
 time: 2 hours

@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 04: JSON Task Management"
+nav_order: 4
+parent: Labs
 lab_number: 4
 difficulty: intermediate
 time: 1 hour

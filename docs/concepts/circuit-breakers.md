@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Circuit Breakers
-permalink: /concepts/circuit-breakers/
+nav_order: 3
 parent: Concepts
+permalink: /concepts/circuit-breakers/
 ---
 
 # Circuit Breakers

@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: SPINE Integration
-permalink: /concepts/spine/
+nav_order: 10
 parent: Concepts
+permalink: /concepts/spine/
 ---
 
 # SPINE Integration

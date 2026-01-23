@@ -1,6 +1,7 @@
 ---
 layout: default
-title: "Coding Flow State - SPINE"
+title: "SPINE Song Demo"
+nav_order: 5
 description: A musical tribute to context engineering and autonomous loops
 ---
 

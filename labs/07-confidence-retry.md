@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 07: Confidence Retry"
+nav_order: 7
+parent: Labs
 lab_number: 7
 difficulty: intermediate
 time: 1 hour

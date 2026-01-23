@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 3 Config
-permalink: /tutorials/tier3-config/
+nav_order: 11
 parent: Tutorials
+permalink: /tutorials/tier3-config/
 ---
 
 # Tier 3: Server Configuration

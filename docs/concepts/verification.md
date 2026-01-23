@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Verification Strategies
-permalink: /concepts/verification/
+nav_order: 2
 parent: Concepts
+permalink: /concepts/verification/
 ---
 
 # Verification Strategies

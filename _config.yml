@@ -6,52 +6,53 @@ author: fbratten
 baseurl: "/8me-showcase"
 url: "https://fbratten.github.io"
 
-# Theme
-theme: minima
-markdown: kramdown
+# Theme - Just the Docs
+remote_theme: just-the-docs/just-the-docs
+color_scheme: dark
 
-# Code repository for linking
-code_repo: "https://github.com/fbratten/8me"
+# Search
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
 
-# Navigation
-header_pages:
-  - docs/tutorials/index.md
-  - docs/concepts/index.md
-  - labs/index.md
-  - about.md
+# Aux links (top right)
+aux_links:
+  "View on GitHub":
+    - "https://github.com/fbratten/8me-showcase"
+aux_links_new_tab: true
 
-# Collections
-collections:
-  labs:
-    output: true
-    permalink: /labs/:name/
-  tutorials:
-    output: true
-    permalink: /tutorials/:name/
+# Footer
+footer_content: "8me Showcase - AI Agent Orchestration Learning Platform"
 
-# Defaults
-defaults:
-  - scope:
-      path: "labs"
-      type: "labs"
-    values:
-      layout: "lab"
-  - scope:
-      path: "docs/tutorials"
-    values:
-      layout: "page"
-  - scope:
-      path: "docs/concepts"
-    values:
-      layout: "page"
+# Features
+back_to_top: true
+back_to_top_text: "Back to top"
+enable_copy_code_button: true
+heading_anchors: true
+
+# External nav links
+nav_external_links:
+  - title: Source Code (8me)
+    url: https://github.com/fbratten/8me
+    hide_icon: false
 
 # Build settings
+markdown: kramdown
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
   - vendor
+  - README.md
+  - update_frontmatter.py
 
-# GitHub metadata
 github:
   repo: fbratten/8me-showcase

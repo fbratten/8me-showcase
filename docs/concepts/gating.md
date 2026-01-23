@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Gating Mechanisms
-permalink: /concepts/gating/
+nav_order: 6
 parent: Concepts
+permalink: /concepts/gating/
 ---
 
 # Gating Mechanisms

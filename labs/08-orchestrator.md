@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 08: Building an Orchestrator"
+nav_order: 8
+parent: Labs
 lab_number: 8
 difficulty: advanced
 time: 2 hours

@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 14: Claude Code Skill"
+nav_order: 14
+parent: Labs
 lab_number: 14
 difficulty: integration
 time: 1.5 hours

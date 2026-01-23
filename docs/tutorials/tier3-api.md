@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 3 API
-permalink: /tutorials/tier3-api/
+nav_order: 12
 parent: Tutorials
+permalink: /tutorials/tier3-api/
 ---
 
 # Tier 3: API Reference

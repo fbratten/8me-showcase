@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Minna Memory
-permalink: /concepts/minna-memory/
+nav_order: 11
 parent: Concepts
+permalink: /concepts/minna-memory/
 ---
 
 # Minna Memory

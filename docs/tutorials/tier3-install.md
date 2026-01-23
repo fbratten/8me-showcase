@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 3 Install
-permalink: /tutorials/tier3-install/
+nav_order: 10
 parent: Tutorials
+permalink: /tutorials/tier3-install/
 ---
 
 # Tier 3: Installing the MCP Server

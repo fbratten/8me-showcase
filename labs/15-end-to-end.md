@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 15: End-to-End Workflow"
+nav_order: 15
+parent: Labs
 lab_number: 15
 difficulty: integration
 time: 3 hours

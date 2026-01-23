@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 05: Tool Calling"
+nav_order: 5
+parent: Labs
 lab_number: 5
 difficulty: intermediate
 time: 1 hour

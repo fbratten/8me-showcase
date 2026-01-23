@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 11: Self-Play Oscillation"
+nav_order: 11
+parent: Labs
 lab_number: 11
 difficulty: advanced
 time: 2 hours

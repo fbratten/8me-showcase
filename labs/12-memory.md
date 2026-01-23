@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 12: Memory Integration"
+nav_order: 12
+parent: Labs
 lab_number: 12
 difficulty: advanced
 time: 1.5 hours

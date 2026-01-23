@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 2 Install
-permalink: /tutorials/tier2-install/
+nav_order: 8
 parent: Tutorials
+permalink: /tutorials/tier2-install/
 ---
 
 # Tier 2: Installing the Skill

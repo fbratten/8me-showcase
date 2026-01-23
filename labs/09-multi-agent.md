@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 09: Multi-Agent Patterns"
+nav_order: 9
+parent: Labs
 lab_number: 9
 difficulty: advanced
 time: 2 hours

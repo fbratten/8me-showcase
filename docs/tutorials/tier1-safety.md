@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 1 Safety Features
-permalink: /tutorials/tier1-safety/
+nav_order: 7
 parent: Tutorials
+permalink: /tutorials/tier1-safety/
 ---
 
 # Tier 1: Circuit Breakers

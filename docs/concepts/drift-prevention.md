@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Drift Prevention
-permalink: /concepts/drift-prevention/
+nav_order: 7
 parent: Concepts
+permalink: /concepts/drift-prevention/
 ---
 
 # Drift Prevention

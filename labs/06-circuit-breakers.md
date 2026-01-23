@@ -1,6 +1,8 @@
 ---
-layout: lab
+layout: default
 title: "Lab 06: Circuit Breakers"
+nav_order: 6
+parent: Labs
 lab_number: 6
 difficulty: intermediate
 time: 45 minutes

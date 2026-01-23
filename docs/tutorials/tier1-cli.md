@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Tier 1 CLI Usage
-permalink: /tutorials/tier1-cli/
+nav_order: 5
 parent: Tutorials
+permalink: /tutorials/tier1-cli/
 ---
 
 # Tier 1: CLI Usage Guide

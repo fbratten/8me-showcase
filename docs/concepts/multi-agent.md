@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: Multi-Agent Coordination
-permalink: /concepts/multi-agent/
+nav_order: 8
 parent: Concepts
+permalink: /concepts/multi-agent/
 ---
 
 # Multi-Agent Coordination
