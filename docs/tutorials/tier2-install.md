@@ -61,7 +61,7 @@ tier2-ralph-skill/
 
 ## Next Steps
 
-- [Using Ralph Commands](./tier2-commands)
+- [Using Ralph Commands](../tier2-commands/)
 - [Lab 14: Skill Development](../../labs/14-skill)
 
 ---

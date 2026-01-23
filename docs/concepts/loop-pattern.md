@@ -180,8 +180,8 @@ if result.says_complete:  # Don't trust this alone
 
 ## Next Steps
 
-- Learn about [Verification Strategies](./verification)
-- Understand [Circuit Breakers](./circuit-breakers)
+- Learn about [Verification Strategies](../verification/)
+- Understand [Circuit Breakers](../circuit-breakers/)
 - See it in action: [Lab 01: Your First Loop](../labs/01-first-loop)
 
 ---

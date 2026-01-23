@@ -169,7 +169,7 @@ class OscillationDetector:
 
 ## Next Steps
 
-- Learn about [Gating Mechanisms](./gating)
+- Learn about [Gating Mechanisms](../gating/)
 - See implementation: [Lab 11: Self-Play](../labs/11-self-play)
 
 ---

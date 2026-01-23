@@ -151,7 +151,7 @@ current = await mcp_client.read_resource("task://current")
 
 ## Next Steps
 
-- Learn about [Self-Play Patterns](./self-play)
+- Learn about [Self-Play Patterns](../self-play/)
 - See implementation: [Lab 02: External State](../labs/02-external-state)
 
 ---

@@ -162,7 +162,7 @@ class ConflictResolver:
 
 ## Next Steps
 
-- Learn about [Provider Comparison](./providers)
+- Learn about [Provider Comparison](../providers/)
 - See implementation: [Lab 09: Multi-Agent](../labs/09-multi-agent)
 
 ---

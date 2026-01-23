@@ -78,8 +78,8 @@ Claude should access `task://queue` resource.
 
 ## Next Steps
 
-- [Configure the Server](./tier3-config)
-- [API Reference](./tier3-api)
+- [Configure the Server](../tier3-config/)
+- [API Reference](../tier3-api/)
 
 ---
 

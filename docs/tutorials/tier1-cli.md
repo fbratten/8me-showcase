@@ -99,8 +99,8 @@ Confidence: 0.95 - Accepted!
 
 ## Next Steps
 
-- [Task Management](./tier1-tasks)
-- [Safety Features](./tier1-safety)
+- [Task Management](../tier1-tasks/)
+- [Safety Features](../tier1-safety/)
 
 ---
 

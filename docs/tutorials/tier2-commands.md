@@ -83,7 +83,7 @@ All tasks done!
 
 ## Next Steps
 
-- [Tier 3: MCP Server](./tier3-install)
+- [Tier 3: MCP Server](../tier3-install/)
 - [Lab 14: Build Your Own Skill](../../labs/14-skill)
 
 ---

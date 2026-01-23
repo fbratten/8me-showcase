@@ -234,7 +234,7 @@ class CircuitBreaker:
 
 ## Next Steps
 
-- Learn about [State Management](./state-management)
+- Learn about [State Management](../state-management/)
 - See implementation: [Lab 06: Circuit Breakers](../labs/06-circuit-breakers)
 
 ---

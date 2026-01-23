@@ -114,7 +114,7 @@ Tier 0 has the loop. Tier 1 adds verification.
 
 ## Next Steps
 
-- [Tier 1: Full MVP](./tier1-cli)
+- [Tier 1: Full MVP](../tier1-cli/)
 - [Lab 01: Build Your Own](../../labs/01-first-loop)
 
 ---

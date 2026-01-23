@@ -86,7 +86,7 @@ Give me a fun fact about loops
 
 ## Next Steps
 
-- [Understand the Code](./tier0-explained)
+- [Understand the Code](../tier0-explained/)
 - [Lab 01: Your First Loop](../../labs/01-first-loop)
 
 ---

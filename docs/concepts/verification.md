@@ -203,8 +203,8 @@ response = client.messages.create(
 
 ## Next Steps
 
-- Learn about [Circuit Breakers](./circuit-breakers)
-- Understand [State Management](./state-management)
+- Learn about [Circuit Breakers](../circuit-breakers/)
+- Understand [State Management](../state-management/)
 - Practice: [Lab 03: Simple Verification](../labs/03-verification)
 
 ---

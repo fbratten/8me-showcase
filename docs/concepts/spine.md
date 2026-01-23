@@ -106,7 +106,7 @@ Route tasks to optimal LLM provider:
 
 ## Next Steps
 
-- Learn about [Minna Memory](./minna-memory)
+- Learn about [Minna Memory](../minna-memory/)
 - See full documentation in [8me repository](https://github.com/fbratten/8me/tree/main/src/tier3.5-orchestration-concepts)
 
 ---

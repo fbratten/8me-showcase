@@ -135,11 +135,11 @@ Before reaching for a framework, consider:
 
 ## Next Steps
 
-- Learn about [SPINE Integration](./spine)
-- Explore [Minna Memory](./minna-memory)
+- Learn about [SPINE Integration](../spine/)
+- Explore [Minna Memory](../minna-memory/)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

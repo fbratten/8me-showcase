@@ -165,7 +165,7 @@ Remove all completed tasks.
 ## Next Steps
 
 - [Lab 13: Build Your Own MCP Server](../../labs/13-mcp-server)
-- [MCP Setup Guide](./mcp-setup)
+- [MCP Setup Guide](../mcp-setup/)
 
 ---
 

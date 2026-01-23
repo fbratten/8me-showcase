@@ -91,7 +91,7 @@ chmod +x /path/to/dist/index.js
 
 ## Next Steps
 
-- [API Reference](./tier3-api)
+- [API Reference](../tier3-api/)
 - [Lab 13: MCP Server](../../labs/13-mcp-server)
 
 ---

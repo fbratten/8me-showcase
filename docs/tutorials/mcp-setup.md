@@ -71,7 +71,7 @@ Find your config file:
 
 ## Next Steps
 
-- [Tier 3 Install Guide](./tier3-install)
+- [Tier 3 Install Guide](../tier3-install/)
 - [Lab 13: MCP Server](../../labs/13-mcp-server)
 
 ---

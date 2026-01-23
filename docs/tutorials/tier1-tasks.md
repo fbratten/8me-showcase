@@ -95,7 +95,7 @@ pending = tm.get_tasks_by_status("pending")
 
 ## Next Steps
 
-- [Safety Features](./tier1-safety)
+- [Safety Features](../tier1-safety/)
 - [Lab 04: JSON Tasks](../../labs/04-json-tasks)
 
 ---
