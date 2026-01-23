@@ -21,6 +21,12 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+.claude/
+
+# Environment
+.env
+.env.local
+.env.*.local
 
 # Local AI/development context (not for public repo)
 NEXT.md
