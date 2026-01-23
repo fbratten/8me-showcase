@@ -97,5 +97,5 @@ chmod +x /path/to/dist/index.js
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Tutorials</a>
+  <a href="../">← Back to Tutorials</a>
 </div>

@@ -182,10 +182,10 @@ if result.says_complete:  # Don't trust this alone
 
 - Learn about [Verification Strategies](../verification/)
 - Understand [Circuit Breakers](../circuit-breakers/)
-- See it in action: [Lab 01: Your First Loop](../labs/01-first-loop)
+- See it in action: [Lab 01: Your First Loop](../../labs/01-first-loop)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

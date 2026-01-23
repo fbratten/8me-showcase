@@ -89,5 +89,5 @@ All tasks done!
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Tutorials</a>
+  <a href="../">← Back to Tutorials</a>
 </div>

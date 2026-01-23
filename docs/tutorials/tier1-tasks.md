@@ -101,5 +101,5 @@ pending = tm.get_tasks_by_status("pending")
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Tutorials</a>
+  <a href="../">← Back to Tutorials</a>
 </div>

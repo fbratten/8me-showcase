@@ -120,5 +120,5 @@ Tier 0 has the loop. Tier 1 adds verification.
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Tutorials</a>
+  <a href="../">← Back to Tutorials</a>
 </div>

@@ -163,10 +163,10 @@ class ConflictResolver:
 ## Next Steps
 
 - Learn about [Provider Comparison](../providers/)
-- See implementation: [Lab 09: Multi-Agent](../labs/09-multi-agent)
+- See implementation: [Lab 09: Multi-Agent](../../labs/09-multi-agent)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

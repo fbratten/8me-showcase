@@ -112,5 +112,5 @@ Route tasks to optimal LLM provider:
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

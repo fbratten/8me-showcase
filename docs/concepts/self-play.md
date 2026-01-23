@@ -170,10 +170,10 @@ class OscillationDetector:
 ## Next Steps
 
 - Learn about [Gating Mechanisms](../gating/)
-- See implementation: [Lab 11: Self-Play](../labs/11-self-play)
+- See implementation: [Lab 11: Self-Play](../../labs/11-self-play)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

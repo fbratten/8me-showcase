@@ -160,10 +160,10 @@ verbosity = memory.set_preference("output", "verbosity")
 ## Next Steps
 
 - See full documentation in [8me repository](https://github.com/fbratten/8me/tree/main/src/tier3.5-orchestration-concepts)
-- Practice: [Lab 12: Memory Integration](../labs/12-memory)
+- Practice: [Lab 12: Memory Integration](../../labs/12-memory)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

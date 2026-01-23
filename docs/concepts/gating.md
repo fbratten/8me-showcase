@@ -170,10 +170,10 @@ def rollback_strategy(checkpoint, failure_type):
 ## Next Steps
 
 - Learn about [Drift Prevention](../drift-prevention/)
-- See implementation: [Lab 10: Gating](../labs/10-gating)
+- See implementation: [Lab 10: Gating](../../labs/10-gating)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

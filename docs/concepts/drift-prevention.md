@@ -169,10 +169,10 @@ def realign(task, current_result, original_intent):
 ## Next Steps
 
 - Learn about [Multi-Agent Coordination](../multi-agent/)
-- See concepts in action: [Lab 10: Gating and Drift Prevention](../labs/10-gating)
+- See concepts in action: [Lab 10: Gating and Drift Prevention](../../labs/10-gating)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

@@ -205,10 +205,10 @@ response = client.messages.create(
 
 - Learn about [Circuit Breakers](../circuit-breakers/)
 - Understand [State Management](../state-management/)
-- Practice: [Lab 03: Simple Verification](../labs/03-verification)
+- Practice: [Lab 03: Simple Verification](../../labs/03-verification)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

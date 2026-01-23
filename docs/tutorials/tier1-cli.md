@@ -105,5 +105,5 @@ Confidence: 0.95 - Accepted!
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Tutorials</a>
+  <a href="../">← Back to Tutorials</a>
 </div>

@@ -235,10 +235,10 @@ class CircuitBreaker:
 ## Next Steps
 
 - Learn about [State Management](../state-management/)
-- See implementation: [Lab 06: Circuit Breakers](../labs/06-circuit-breakers)
+- See implementation: [Lab 06: Circuit Breakers](../../labs/06-circuit-breakers)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>

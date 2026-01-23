@@ -152,10 +152,10 @@ current = await mcp_client.read_resource("task://current")
 ## Next Steps
 
 - Learn about [Self-Play Patterns](../self-play/)
-- See implementation: [Lab 02: External State](../labs/02-external-state)
+- See implementation: [Lab 02: External State](../../labs/02-external-state)
 
 ---
 
 <div style="text-align: center;">
-  <a href="./">← Back to Concepts</a>
+  <a href="../">← Back to Concepts</a>
 </div>
