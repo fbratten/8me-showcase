@@ -11,7 +11,7 @@ description: A musical tribute to context engineering and autonomous loops
 <div class="video-preview">
   <a href="https://youtu.be/k7Gz_yz9Qe4" target="_blank">
     <img src="https://fbratten.github.io/music-video-creator-showcase/screenshots/showcase_sphere_lyrics.gif" alt="SPINE Song Preview - Click to watch on YouTube" style="max-width: 100%; border-radius: 8px; cursor: pointer;">
-    <p style="text-align: center; margin-top: 8px;">Click to watch full video on YouTube</p>
+    <p style="text-align: center; margin-top: 8px;">Click to watch example video on YouTube</p>
   </a>
 </div>
 
