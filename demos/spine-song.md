@@ -49,11 +49,11 @@ The genre mix mirrors the coding experience - smooth flow punctuated by breakthr
 ## Related Projects
 
 - [SPINE Framework](https://github.com/fbratten/spine) - Context engineering backbone
-- [8me Orchestration](../) - Ralph Wiggum autonomous loops
+- [8me Orchestration](/8me-showcase/) - Ralph Wiggum autonomous loops
 - [Music Video Creator](https://fbratten.github.io/music-video-creator-showcase/) - Reactive audio visualizations
 
 ---
 
 <div style="text-align: center; margin-top: 2rem;">
-  <a href=".." style="text-decoration: none;">&larr; Back to 8me Showcase</a>
+  <a href="/8me-showcase/" style="text-decoration: none;">&larr; Back to 8me Showcase</a>
 </div>
