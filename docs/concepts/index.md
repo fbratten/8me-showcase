@@ -12,45 +12,45 @@ Understand the theory behind AI agent orchestration.
 
 ## Core Concepts
 
-### [The Loop Pattern](./loop-pattern.md)
+### [The Loop Pattern](./loop-pattern)
 The foundation of all orchestration: read, execute, verify, repeat.
 
-### [Verification Strategies](./verification.md)
+### [Verification Strategies](./verification)
 External vs internal verification, confidence scoring, hybrid approaches.
 
-### [Circuit Breakers](./circuit-breakers.md)
+### [Circuit Breakers](./circuit-breakers)
 Safety mechanisms to prevent infinite loops and runaway costs.
 
-### [State Management](./state-management.md)
+### [State Management](./state-management)
 Persisting state for reliability and debugging.
 
 ---
 
 ## Advanced Patterns
 
-### [Self-Play & Oscillation](./self-play.md)
+### [Self-Play & Oscillation](./self-play)
 Internal debate patterns for quality assurance (DIALECTIC, proposer/critic).
 
-### [Gating Mechanisms](./gating.md)
+### [Gating Mechanisms](./gating)
 Pre and post-condition enforcement with rollback.
 
-### [Drift Prevention](./drift-prevention.md)
+### [Drift Prevention](./drift-prevention)
 Keeping agents aligned with original intent over multiple iterations.
 
-### [Multi-Agent Coordination](./multi-agent.md)
+### [Multi-Agent Coordination](./multi-agent)
 Pipelines, swarms, and role-based teams.
 
 ---
 
 ## Framework Comparison
 
-### [Provider Overview](./providers.md)
+### [Provider Overview](./providers)
 Compare LangChain, CrewAI, AutoGen, Semantic Kernel, Haystack, DSPy.
 
-### [SPINE Integration](./spine.md)
+### [SPINE Integration](./spine)
 Context engineering and MCP-native orchestration.
 
-### [Minna Memory](./minna-memory.md)
+### [Minna Memory](./minna-memory)
 Cross-session persistence for AI agents.
 
 ---
@@ -82,9 +82,9 @@ Before reaching for a framework:
 
 If you're new to orchestration:
 
-1. Start with [The Loop Pattern](./loop-pattern.md)
-2. Learn [Verification Strategies](./verification.md)
-3. Understand [Circuit Breakers](./circuit-breakers.md)
+1. Start with [The Loop Pattern](./loop-pattern)
+2. Learn [Verification Strategies](./verification)
+3. Understand [Circuit Breakers](./circuit-breakers)
 4. Then explore advanced patterns as needed
 
 ---

@@ -15,10 +15,10 @@ Quick-start guides to get you up and running.
 ### [Your First Loop](../labs/01-first-loop)
 15-minute introduction to AI loops. Build a working loop from scratch.
 
-### [Understanding Verification](./verification-basics.md)
+### [Understanding Verification](./verification-basics)
 Why verification matters and how to implement it.
 
-### [Setting Up MCP](./mcp-setup.md)
+### [Setting Up MCP](./mcp-setup)
 Configure MCP servers for Claude Desktop.
 
 ---
@@ -26,22 +26,22 @@ Configure MCP servers for Claude Desktop.
 ## By Tier
 
 ### Tier 0: Hello World
-- [Run the Hello World example](./tier0-quickstart.md)
-- [Understand the code](./tier0-explained.md)
+- [Run the Hello World example](./tier0-quickstart)
+- [Understand the code](./tier0-explained)
 
 ### Tier 1: Full Loop
-- [CLI usage guide](./tier1-cli.md)
-- [Task management](./tier1-tasks.md)
-- [Circuit breakers](./tier1-safety.md)
+- [CLI usage guide](./tier1-cli)
+- [Task management](./tier1-tasks)
+- [Circuit breakers](./tier1-safety)
 
 ### Tier 2: Claude Code Skill
-- [Install the skill](./tier2-install.md)
-- [Using /ralph commands](./tier2-commands.md)
+- [Install the skill](./tier2-install)
+- [Using /ralph commands](./tier2-commands)
 
 ### Tier 3: MCP Server
-- [Install the server](./tier3-install.md)
-- [Configure in Claude Desktop](./tier3-config.md)
-- [Available resources & tools](./tier3-api.md)
+- [Install the server](./tier3-install)
+- [Configure in Claude Desktop](./tier3-config)
+- [Available resources & tools](./tier3-api)
 
 ---
 
