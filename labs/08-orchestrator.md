@@ -9,54 +9,70 @@ prerequisites: Labs 01-07 completed
 
 # Lab 08: Building an Orchestrator
 
-Compose all previous concepts into a complete, production-ready orchestrator.
+Build a **production-shaped orchestrator skeleton** - minimal but extensible, with pluggable adapters and a hardening checklist for production use.
 
 ## Objectives
 
 By the end of this lab, you will:
-- Understand orchestration architecture
-- Build a modular orchestrator with pluggable components
-- Implement the orchestrator lifecycle
-- Create reusable execution strategies
+- Build a modular orchestrator from the ground up, layer by layer
+- Understand how each component (store, executor, verifier, safety) fits together
+- Have a working orchestrator you can run without API keys
+- Know what's needed to harden it for production
 
 ## Prerequisites
 
 - Labs 01-07 completed
 - Understanding of all intermediate concepts
 
-## What is an Orchestrator?
+## Code Map
 
-An orchestrator is the **conductor** that coordinates all the pieces:
+Before diving in, here's what we'll build:
 
+| File | Purpose |
+|------|---------|
+| `interfaces.py` | Contracts + shared types (no vendor code) |
+| `orchestrator.py` | Core loop logic (vendor-agnostic) |
+| `components.py` | Adapters (JSON store, Claude executor, circuit breaker) |
+| `main.py` | Assembly + demo |
+
+---
+
+## The Layered Approach
+
+We'll build the orchestrator in layers, each adding one concept:
+
+| Layer | Adds | What You Get |
+|-------|------|--------------|
+| 0 | Basic loop | `get_next() → execute() → save_result()` |
+| 1 | State + attempts | `IN_PROGRESS / COMPLETED / FAILED` tracking |
+| 2 | Retries | `attempts < max_attempts ? requeue : fail` |
+| 3 | Verification | Execution success ≠ task done |
+| 4 | Safety | Circuit breaker stops runaway loops |
+| 5 | Hooks | Observability without coupling |
+| 6 | Builder | Ergonomic composition |
+
+Each layer produces a runnable system.
+
+---
+
+## Layer 0: The Smallest Orchestrator Loop
+
+The core pattern is just three lines:
+
+```python
+while has_pending():
+    task = get_next()
+    result = execute(task)
+    save_result(task, result)
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      ORCHESTRATOR                           │
-│                                                             │
-│  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐ │
-│  │  Task    │   │ Executor │   │ Verifier │   │ Circuit  │ │
-│  │  Store   │   │          │   │          │   │ Breaker  │ │
-│  └────┬─────┘   └────┬─────┘   └────┬─────┘   └────┬─────┘ │
-│       │              │              │              │        │
-│       └──────────────┴──────────────┴──────────────┘        │
-│                          │                                  │
-│                    ┌─────┴─────┐                           │
-│                    │   Loop    │                           │
-│                    └───────────┘                           │
-└─────────────────────────────────────────────────────────────┘
-```
 
-The orchestrator:
-1. **Gets tasks** from the store
-2. **Executes** them via the executor
-3. **Verifies** results via the verifier
-4. **Enforces safety** via the circuit breaker
-5. **Manages state** throughout the lifecycle
+That's it. Everything else is refinement.
 
 ---
 
 ## Step 1: Define the Interfaces
 
-Create `interfaces.py`:
+Create `interfaces.py` - the contracts that all components must follow:
 
 ```python
 """
@@ -65,10 +81,12 @@ Orchestrator Interfaces - Lab 08
 Abstract interfaces for pluggable orchestrator components.
 """
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Optional, List, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
+from typing import Optional, List, Dict, Any
 
 
 class TaskStatus(Enum):
@@ -86,12 +104,7 @@ class Task:
     status: TaskStatus = TaskStatus.PENDING
     result: Optional[str] = None
     attempts: int = 0
-    max_attempts: int = 3
-    metadata: dict = None
-
-    def __post_init__(self):
-        if self.metadata is None:
-            self.metadata = {}
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -101,11 +114,7 @@ class ExecutionResult:
     output: str
     confidence: float
     error: Optional[str] = None
-    metadata: dict = None
-
-    def __post_init__(self):
-        if self.metadata is None:
-            self.metadata = {}
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -114,11 +123,7 @@ class VerificationResult:
     passed: bool
     confidence: float
     feedback: str
-    issues: List[str] = None
-
-    def __post_init__(self):
-        if self.issues is None:
-            self.issues = []
+    issues: List[str] = field(default_factory=list)
 
 
 class TaskStore(ABC):
@@ -135,17 +140,17 @@ class TaskStore(ABC):
         pass
 
     @abstractmethod
-    def update_status(self, task_id: str, status: TaskStatus):
+    def update_status(self, task_id: str, status: TaskStatus) -> None:
         """Update task status."""
         pass
 
     @abstractmethod
-    def save_result(self, task_id: str, result: str):
+    def save_result(self, task_id: str, result: str) -> None:
         """Save task result."""
         pass
 
     @abstractmethod
-    def increment_attempts(self, task_id: str):
+    def increment_attempts(self, task_id: str) -> None:
         """Increment attempt counter."""
         pass
 
@@ -182,12 +187,12 @@ class SafetyCheck(ABC):
         pass
 
     @abstractmethod
-    def record_success(self):
+    def record_success(self) -> None:
         """Record a successful iteration."""
         pass
 
     @abstractmethod
-    def record_failure(self, error: str):
+    def record_failure(self, error: str) -> None:
         """Record a failed iteration."""
         pass
 
@@ -197,11 +202,16 @@ class SafetyCheck(ABC):
         pass
 ```
 
+**Key design decisions:**
+- `Task` has no `max_attempts` - that's a config concern, not a data concern
+- All mutable defaults use `field(default_factory=...)` - avoids shared state bugs
+- `increment_attempts` takes `task_id: str` - consistent with other methods
+
 ---
 
 ## Step 2: Create the Core Orchestrator
 
-Create `orchestrator.py`:
+Create `orchestrator.py` - the engine that coordinates all components:
 
 ```python
 """
@@ -210,9 +220,11 @@ Core Orchestrator - Lab 08
 The main orchestration engine that coordinates all components.
 """
 
-from typing import Optional, Callable, List
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Optional, Callable, List
 import time
 
 from interfaces import (
@@ -235,18 +247,17 @@ class OrchestratorConfig:
     """Configuration for the orchestrator."""
     verify_results: bool = True
     retry_on_failure: bool = True
-    max_retries_per_task: int = 3
-    pause_between_tasks: float = 0.0  # Seconds
-    log_level: str = "info"
+    max_attempts_per_task: int = 3   # Total tries, including the first
+    pause_between_tasks: float = 0.0
 
 
 @dataclass
 class OrchestratorStats:
     """Statistics for the orchestrator run."""
-    tasks_processed: int = 0
+    tasks_started: int = 0
     tasks_completed: int = 0
     tasks_failed: int = 0
-    total_attempts: int = 0
+    executions: int = 0
     start_time: float = field(default_factory=time.time)
     end_time: Optional[float] = None
 
@@ -255,25 +266,18 @@ class OrchestratorStats:
         end = self.end_time or time.time()
         return end - self.start_time
 
-    @property
-    def success_rate(self) -> float:
-        if self.tasks_processed == 0:
-            return 0.0
-        return self.tasks_completed / self.tasks_processed
-
     def to_dict(self) -> dict:
         return {
-            "tasks_processed": self.tasks_processed,
+            "tasks_started": self.tasks_started,
             "tasks_completed": self.tasks_completed,
             "tasks_failed": self.tasks_failed,
-            "total_attempts": self.total_attempts,
+            "executions": self.executions,
             "elapsed_seconds": round(self.elapsed_seconds, 2),
-            "success_rate": round(self.success_rate * 100, 1)
         }
 
 
 # Type alias for hooks
-Hook = Callable[["Orchestrator", Task, Optional[ExecutionResult]], None]
+Hook = Callable[["Orchestrator", Optional[Task], Optional[ExecutionResult]], None]
 
 
 class Orchestrator:
@@ -282,18 +286,6 @@ class Orchestrator:
 
     Coordinates task storage, execution, verification, and safety
     to process tasks reliably.
-
-    Usage:
-        orchestrator = Orchestrator(
-            task_store=my_store,
-            executor=my_executor,
-            verifier=my_verifier,
-            safety=my_circuit_breaker
-        )
-
-        orchestrator.run()
-
-        print(orchestrator.stats.to_dict())
     """
 
     def __init__(
@@ -326,18 +318,21 @@ class Orchestrator:
     # ==================== Lifecycle ====================
 
     def run(self) -> OrchestratorStats:
-        """
-        Run the orchestrator until all tasks are processed or stopped.
-
-        Returns:
-            OrchestratorStats with run statistics
-        """
+        """Run the orchestrator until all tasks are processed or stopped."""
         self.state = OrchestratorState.RUNNING
         self.stats = OrchestratorStats()
         self._trigger_hook("on_run_start", None, None)
 
         try:
-            while self._should_continue():
+            while True:
+                # Handle pause state - sleep and continue checking
+                if self.state == OrchestratorState.PAUSED:
+                    time.sleep(0.1)
+                    continue
+
+                if not self._should_continue():
+                    break
+
                 task = self.task_store.get_next()
                 if not task:
                     break
@@ -347,27 +342,28 @@ class Orchestrator:
                 if self.config.pause_between_tasks > 0:
                     time.sleep(self.config.pause_between_tasks)
 
-        except Exception as e:
+        except Exception:
             self.state = OrchestratorState.ERROR
             raise
         finally:
             self.stats.end_time = time.time()
             self._trigger_hook("on_run_end", None, None)
 
-        self.state = OrchestratorState.STOPPED
+        if self.state != OrchestratorState.ERROR:
+            self.state = OrchestratorState.STOPPED
         return self.stats
 
-    def pause(self):
-        """Pause the orchestrator."""
+    def pause(self) -> None:
+        """Pause the orchestrator (loop continues but waits)."""
         if self.state == OrchestratorState.RUNNING:
             self.state = OrchestratorState.PAUSED
 
-    def resume(self):
+    def resume(self) -> None:
         """Resume a paused orchestrator."""
         if self.state == OrchestratorState.PAUSED:
             self.state = OrchestratorState.RUNNING
 
-    def stop(self):
+    def stop(self) -> None:
         """Stop the orchestrator."""
         self.state = OrchestratorState.STOPPED
 
@@ -375,7 +371,7 @@ class Orchestrator:
 
     def _should_continue(self) -> bool:
         """Check if the orchestrator should continue running."""
-        if self.state != OrchestratorState.RUNNING:
+        if self.state not in (OrchestratorState.RUNNING, OrchestratorState.PAUSED):
             return False
 
         if not self.task_store.has_pending():
@@ -386,35 +382,37 @@ class Orchestrator:
 
         return True
 
-    def _process_task(self, task: Task):
+    def _process_task(self, task: Task) -> None:
         """Process a single task through the full lifecycle."""
-        self.stats.tasks_processed += 1
+        self.stats.tasks_started += 1
         self._trigger_hook("on_task_start", task, None)
 
-        # Mark task as in progress
+        # Mark task as in progress and increment attempts
         self.task_store.update_status(task.id, TaskStatus.IN_PROGRESS)
-        self.task_store.increment_attempts(task)
+        self.task_store.increment_attempts(task.id)
+
+        # Get refreshed task with updated attempt count
+        current_task = self.task_store.get_task(task.id) or task
 
         # Execute
-        result = self.executor.execute(task)
-        self.stats.total_attempts += 1
+        result = self.executor.execute(current_task)
+        self.stats.executions += 1
 
         if not result.success:
-            self._handle_execution_failure(task, result)
+            self._handle_failure(current_task, result.error or "Execution failed")
             return
 
         # Verify (if enabled and verifier provided)
         if self.config.verify_results and self.verifier:
-            verification = self.verifier.verify(task, result)
-
+            verification = self.verifier.verify(current_task, result)
             if not verification.passed:
-                self._handle_verification_failure(task, result, verification)
+                self._handle_failure(current_task, verification.feedback)
                 return
 
         # Success!
-        self._complete_task(task, result)
+        self._complete_task(current_task, result)
 
-    def _complete_task(self, task: Task, result: ExecutionResult):
+    def _complete_task(self, task: Task, result: ExecutionResult) -> None:
         """Mark task as completed."""
         self.task_store.update_status(task.id, TaskStatus.COMPLETED)
         self.task_store.save_result(task.id, result.output)
@@ -425,57 +423,31 @@ class Orchestrator:
 
         self._trigger_hook("on_task_complete", task, result)
 
-    def _handle_execution_failure(self, task: Task, result: ExecutionResult):
-        """Handle a failed execution."""
+    def _handle_failure(self, task: Task, reason: str) -> None:
+        """Handle a failed execution or verification."""
         if self.safety:
-            self.safety.record_failure(result.error or "Execution failed")
+            self.safety.record_failure(reason)
 
-        if self._should_retry(task):
-            self._retry_task(task, result.error or "Execution failed")
+        # Get current attempt count
+        refreshed = self.task_store.get_task(task.id) or task
+
+        # Retry if: retries enabled AND attempts < max
+        can_retry = (
+            self.config.retry_on_failure and
+            refreshed.attempts < self.config.max_attempts_per_task
+        )
+
+        if can_retry:
+            self.task_store.update_status(task.id, TaskStatus.PENDING)
+            self._trigger_hook("on_task_retry", task, None)
         else:
-            self._fail_task(task, result.error or "Execution failed")
-
-    def _handle_verification_failure(
-        self,
-        task: Task,
-        result: ExecutionResult,
-        verification: VerificationResult
-    ):
-        """Handle a failed verification."""
-        if self.safety:
-            self.safety.record_failure(verification.feedback)
-
-        if self._should_retry(task):
-            self._retry_task(task, verification.feedback)
-        else:
-            self._fail_task(task, verification.feedback)
-
-    def _should_retry(self, task: Task) -> bool:
-        """Determine if a task should be retried."""
-        if not self.config.retry_on_failure:
-            return False
-
-        # Get current task state for attempt count
-        current_task = self.task_store.get_task(task.id)
-        if current_task and current_task.attempts >= self.config.max_retries_per_task:
-            return False
-
-        return True
-
-    def _retry_task(self, task: Task, reason: str):
-        """Queue task for retry."""
-        self.task_store.update_status(task.id, TaskStatus.PENDING)
-        self._trigger_hook("on_task_retry", task, None)
-
-    def _fail_task(self, task: Task, reason: str):
-        """Mark task as permanently failed."""
-        self.task_store.update_status(task.id, TaskStatus.FAILED)
-        self.stats.tasks_failed += 1
-        self._trigger_hook("on_task_fail", task, None)
+            self.task_store.update_status(task.id, TaskStatus.FAILED)
+            self.stats.tasks_failed += 1
+            self._trigger_hook("on_task_fail", task, None)
 
     # ==================== Hooks ====================
 
-    def add_hook(self, event: str, hook: Hook):
+    def add_hook(self, event: str, hook: Hook) -> None:
         """Add a lifecycle hook."""
         if event in self._hooks:
             self._hooks[event].append(hook)
@@ -485,7 +457,7 @@ class Orchestrator:
         event: str,
         task: Optional[Task],
         result: Optional[ExecutionResult]
-    ):
+    ) -> None:
         """Trigger all hooks for an event."""
         for hook in self._hooks.get(event, []):
             try:
@@ -496,19 +468,7 @@ class Orchestrator:
 
 
 class OrchestratorBuilder:
-    """
-    Builder for creating orchestrators with fluent API.
-
-    Usage:
-        orchestrator = (OrchestratorBuilder()
-            .with_task_store(my_store)
-            .with_executor(my_executor)
-            .with_verifier(my_verifier)
-            .with_safety(my_breaker)
-            .with_config(my_config)
-            .on_task_complete(my_callback)
-            .build())
-    """
+    """Builder for creating orchestrators with fluent API."""
 
     def __init__(self):
         self._task_store = None
@@ -577,9 +537,36 @@ class OrchestratorBuilder:
 
 ---
 
+## Walkthrough Trace
+
+Here's what happens when a task needs one retry:
+
+```
+Task-001 picked up
+  → status = IN_PROGRESS
+  → attempts = 1
+  → executor.execute() returns success
+  → verifier.verify() FAILS (low confidence)
+  → attempts (1) < max_attempts (3) → requeue
+  → status = PENDING
+  → on_task_retry hook fires
+
+Task-001 picked up again
+  → status = IN_PROGRESS
+  → attempts = 2
+  → executor.execute() returns success
+  → verifier.verify() PASSES
+  → status = COMPLETED
+  → on_task_complete hook fires
+```
+
+This trace is worth a page of explanation.
+
+---
+
 ## Step 3: Implement Concrete Components
 
-Create `components.py`:
+Create `components.py` - the pluggable adapters:
 
 ```python
 """
@@ -597,6 +584,47 @@ from interfaces import (
     Task, TaskStatus, TaskStore, Executor, Verifier, SafetyCheck,
     ExecutionResult, VerificationResult
 )
+
+
+# ==================== Task Stores ====================
+
+class InMemoryTaskStore(TaskStore):
+    """In-memory task store - great for testing and learning."""
+
+    def __init__(self, tasks: Optional[List[Task]] = None):
+        self.tasks: dict[str, Task] = {}
+        if tasks:
+            for task in tasks:
+                self.tasks[task.id] = task
+
+    def add(self, task_id: str, description: str) -> Task:
+        task = Task(id=task_id, description=description)
+        self.tasks[task_id] = task
+        return task
+
+    def get_next(self) -> Optional[Task]:
+        for task in self.tasks.values():
+            if task.status == TaskStatus.PENDING:
+                return task
+        return None
+
+    def has_pending(self) -> bool:
+        return any(t.status == TaskStatus.PENDING for t in self.tasks.values())
+
+    def update_status(self, task_id: str, status: TaskStatus) -> None:
+        if task_id in self.tasks:
+            self.tasks[task_id].status = status
+
+    def save_result(self, task_id: str, result: str) -> None:
+        if task_id in self.tasks:
+            self.tasks[task_id].result = result
+
+    def increment_attempts(self, task_id: str) -> None:
+        if task_id in self.tasks:
+            self.tasks[task_id].attempts += 1
+
+    def get_task(self, task_id: str) -> Optional[Task]:
+        return self.tasks.get(task_id)
 
 
 class JSONTaskStore(TaskStore):
@@ -618,7 +646,6 @@ class JSONTaskStore(TaskStore):
                         status=TaskStatus(task_data.get("status", "pending")),
                         result=task_data.get("result"),
                         attempts=task_data.get("attempts", 0),
-                        max_attempts=task_data.get("max_attempts", 3),
                         metadata=task_data.get("metadata", {})
                     )
                     self.tasks[task.id] = task
@@ -632,7 +659,6 @@ class JSONTaskStore(TaskStore):
                     "status": t.status.value,
                     "result": t.result,
                     "attempts": t.attempts,
-                    "max_attempts": t.max_attempts,
                     "metadata": t.metadata
                 }
                 for t in self.tasks.values()
@@ -657,23 +683,43 @@ class JSONTaskStore(TaskStore):
     def has_pending(self) -> bool:
         return any(t.status == TaskStatus.PENDING for t in self.tasks.values())
 
-    def update_status(self, task_id: str, status: TaskStatus):
+    def update_status(self, task_id: str, status: TaskStatus) -> None:
         if task_id in self.tasks:
             self.tasks[task_id].status = status
             self._save()
 
-    def save_result(self, task_id: str, result: str):
+    def save_result(self, task_id: str, result: str) -> None:
         if task_id in self.tasks:
             self.tasks[task_id].result = result
             self._save()
 
-    def increment_attempts(self, task: Task):
-        if task.id in self.tasks:
-            self.tasks[task.id].attempts += 1
+    def increment_attempts(self, task_id: str) -> None:
+        if task_id in self.tasks:
+            self.tasks[task_id].attempts += 1
             self._save()
 
     def get_task(self, task_id: str) -> Optional[Task]:
         return self.tasks.get(task_id)
+
+
+# ==================== Executors ====================
+
+class FakeExecutor(Executor):
+    """Fake executor for testing - no API keys needed."""
+
+    def __init__(self, success: bool = True, output: str = "Fake result"):
+        self.success = success
+        self.output = output
+        self.call_count = 0
+
+    def execute(self, task: Task) -> ExecutionResult:
+        self.call_count += 1
+        return ExecutionResult(
+            success=self.success,
+            output=f"{self.output} for: {task.description}",
+            confidence=0.9 if self.success else 0.0,
+            error=None if self.success else "Fake failure"
+        )
 
 
 class ClaudeExecutor(Executor):
@@ -696,7 +742,7 @@ class ClaudeExecutor(Executor):
             return ExecutionResult(
                 success=True,
                 output=output,
-                confidence=0.85,  # Default confidence
+                confidence=0.85,
                 metadata={
                     "model": self.model,
                     "tokens": response.usage.output_tokens
@@ -710,6 +756,19 @@ class ClaudeExecutor(Executor):
                 confidence=0.0,
                 error=str(e)
             )
+
+
+# ==================== Verifiers ====================
+
+class AlwaysPassVerifier(Verifier):
+    """Verifier that always passes - for testing."""
+
+    def verify(self, task: Task, result: ExecutionResult) -> VerificationResult:
+        return VerificationResult(
+            passed=True,
+            confidence=1.0,
+            feedback="Auto-passed"
+        )
 
 
 class ClaudeVerifier(Verifier):
@@ -781,6 +840,8 @@ ISSUES: comma-separated list of issues (if any)
         )
 
 
+# ==================== Safety ====================
+
 class SimpleCircuitBreaker(SafetyCheck):
     """Simple circuit breaker implementation."""
 
@@ -806,11 +867,11 @@ class SimpleCircuitBreaker(SafetyCheck):
 
         return True
 
-    def record_success(self):
+    def record_success(self) -> None:
         self.iterations += 1
         self.consecutive_failures = 0
 
-    def record_failure(self, error: str):
+    def record_failure(self, error: str) -> None:
         self.iterations += 1
         self.consecutive_failures += 1
 
@@ -822,148 +883,112 @@ class SimpleCircuitBreaker(SafetyCheck):
 
 ## Step 4: Put It All Together
 
-Create `main.py`:
+Create `main.py` - first without API keys, then with Claude:
 
 ```python
 """
 Orchestrator Demo - Lab 08
 
-Complete example of the orchestrator in action.
+Run without API keys first, then upgrade to Claude.
 """
 
 from orchestrator import Orchestrator, OrchestratorBuilder, OrchestratorConfig
-from components import JSONTaskStore, ClaudeExecutor, ClaudeVerifier, SimpleCircuitBreaker
+from components import (
+    InMemoryTaskStore, FakeExecutor, AlwaysPassVerifier,
+    JSONTaskStore, ClaudeExecutor, ClaudeVerifier,
+    SimpleCircuitBreaker
+)
+from interfaces import Task
 
 
 def on_task_start(orch, task, result):
-    print(f"\n▶ Starting: {task.description[:50]}...")
+    print(f"\n  [{task.attempts + 1}] Starting: {task.description[:40]}...")
 
 
 def on_task_complete(orch, task, result):
-    print(f"  ✓ Completed!")
+    print(f"      ✓ Completed!")
 
 
 def on_task_fail(orch, task, result):
-    print(f"  ✗ Failed")
+    print(f"      ✗ Failed after {task.attempts} attempts")
 
 
 def on_task_retry(orch, task, result):
-    print(f"  ↻ Retrying...")
+    print(f"      ↻ Will retry...")
 
 
-def main():
-    # Create components
-    store = JSONTaskStore("tasks.json")
-    executor = ClaudeExecutor()
-    verifier = ClaudeVerifier()
-    safety = SimpleCircuitBreaker(max_iterations=50, max_consecutive_failures=3)
+def demo_without_api():
+    """Run the orchestrator without needing API keys."""
+    print("=" * 60)
+    print("DEMO: Orchestrator with Fake Components")
+    print("=" * 60)
 
-    # Add sample tasks if empty
-    if not store.has_pending() and len(store.tasks) == 0:
-        store.add("Write a haiku about orchestration")
-        store.add("Explain the conductor pattern in one sentence")
-        store.add("List 3 benefits of modular architecture")
+    # Create in-memory store with test tasks
+    store = InMemoryTaskStore()
+    store.add("task-001", "Write a haiku")
+    store.add("task-002", "Explain loops")
+    store.add("task-003", "List 3 benefits")
 
-    # Build orchestrator
-    config = OrchestratorConfig(
-        verify_results=True,
-        retry_on_failure=True,
-        max_retries_per_task=3
-    )
-
+    # Build orchestrator with fake components
     orchestrator = (OrchestratorBuilder()
         .with_task_store(store)
-        .with_executor(executor)
-        .with_verifier(verifier)
-        .with_safety(safety)
-        .with_config(config)
+        .with_executor(FakeExecutor(success=True))
+        .with_verifier(AlwaysPassVerifier())
+        .with_safety(SimpleCircuitBreaker(max_iterations=10))
+        .with_config(OrchestratorConfig(max_attempts_per_task=3))
         .on_task_start(on_task_start)
         .on_task_complete(on_task_complete)
         .on_task_fail(on_task_fail)
         .on_task_retry(on_task_retry)
         .build())
 
-    # Run!
-    print("=" * 60)
-    print("ORCHESTRATOR DEMO")
-    print("=" * 60)
-
     stats = orchestrator.run()
-
-    # Report
-    print("\n" + "=" * 60)
-    print("RESULTS")
-    print("=" * 60)
     print(f"\nStats: {stats.to_dict()}")
 
-    if safety.get_stop_reason():
-        print(f"\n⚠️ Stopped: {safety.get_stop_reason()}")
 
-    print("\nTasks:")
-    for task in store.tasks.values():
-        icon = {"completed": "✓", "failed": "✗", "pending": "○"}.get(task.status.value, "?")
-        print(f"  {icon} [{task.id}] {task.description[:40]}...")
-        if task.result:
-            print(f"      Result: {task.result[:60]}...")
+def demo_with_claude():
+    """Run the orchestrator with Claude (requires API key)."""
+    print("\n" + "=" * 60)
+    print("DEMO: Orchestrator with Claude")
+    print("=" * 60)
+
+    store = JSONTaskStore("tasks.json")
+
+    # Add sample tasks if empty
+    if not store.has_pending() and len(store.tasks) == 0:
+        store.add("Write a haiku about orchestration")
+        store.add("Explain the conductor pattern in one sentence")
+
+    orchestrator = (OrchestratorBuilder()
+        .with_task_store(store)
+        .with_executor(ClaudeExecutor())
+        .with_verifier(ClaudeVerifier())
+        .with_safety(SimpleCircuitBreaker(max_iterations=50))
+        .with_config(OrchestratorConfig(
+            verify_results=True,
+            max_attempts_per_task=3
+        ))
+        .on_task_start(on_task_start)
+        .on_task_complete(on_task_complete)
+        .on_task_fail(on_task_fail)
+        .on_task_retry(on_task_retry)
+        .build())
+
+    stats = orchestrator.run()
+    print(f"\nStats: {stats.to_dict()}")
 
 
 if __name__ == "__main__":
-    main()
+    # Always works - no API key needed
+    demo_without_api()
+
+    # Uncomment to test with Claude (requires ANTHROPIC_API_KEY)
+    # demo_with_claude()
 ```
 
 ---
 
 ## Understanding the Architecture
-
-### Component Responsibilities
-
-| Component | Responsibility |
-|-----------|---------------|
-| **TaskStore** | Persistence, querying, state management |
-| **Executor** | AI interaction, prompt construction |
-| **Verifier** | Quality checks, validation |
-| **SafetyCheck** | Limits, circuit breaking |
-| **Orchestrator** | Coordination, lifecycle, hooks |
-
-### The Orchestrator Loop
-
-```
-┌────────────────────────────────────────────────────┐
-│                 orchestrator.run()                  │
-└──────────────────────┬─────────────────────────────┘
-                       │
-                       ▼
-              ┌────────────────┐
-              │ should_continue │◄───────────────────┐
-              └───────┬────────┘                     │
-                      │ yes                          │
-                      ▼                              │
-              ┌────────────────┐                     │
-              │   get_next()   │                     │
-              └───────┬────────┘                     │
-                      │                              │
-                      ▼                              │
-              ┌────────────────┐                     │
-              │   execute()    │                     │
-              └───────┬────────┘                     │
-                      │                              │
-                      ▼                              │
-              ┌────────────────┐                     │
-              │   verify()     │                     │
-              └───────┬────────┘                     │
-                      │                              │
-            ┌─────────┴─────────┐                    │
-            │                   │                    │
-            ▼                   ▼                    │
-       ┌────────┐         ┌────────┐                │
-       │ PASS   │         │ FAIL   │                │
-       └───┬────┘         └───┬────┘                │
-           │                  │                      │
-           ▼                  ▼                      │
-       complete()        retry/fail()               │
-           │                  │                      │
-           └──────────────────┴──────────────────────┘
-```
 
 ### Why Interfaces?
 
@@ -972,19 +997,33 @@ if __name__ == "__main__":
 class Orchestrator:
     def __init__(self):
         self.store = JSONTaskStore()  # Hardcoded!
-        self.executor = ClaudeExecutor()  # Hardcoded!
 
 # With interfaces: loosely coupled
 class Orchestrator:
-    def __init__(self, store: TaskStore, executor: Executor):
-        self.store = store  # Any TaskStore implementation
-        self.executor = executor  # Any Executor implementation
+    def __init__(self, store: TaskStore):
+        self.store = store  # Any TaskStore works
 ```
 
 Benefits:
-- **Testability**: Inject mocks for testing
+- **Testability**: Inject fakes for testing
 - **Flexibility**: Swap implementations easily
 - **Extensibility**: Add new implementations without changing core
+
+---
+
+## Hardening Checklist
+
+This lab gives you a **skeleton**. For production, add:
+
+| Category | What to Add |
+|----------|-------------|
+| **Timeouts** | Execution timeout, verification timeout |
+| **Idempotency** | Dedup by task ID, at-least-once → exactly-once |
+| **Persistence** | Durable task store (Postgres, Redis) |
+| **Concurrency** | Thread safety, parallel execution |
+| **Observability** | Structured logs, metrics, tracing |
+| **Dead Letter Queue** | Store permanently failed tasks for review |
+| **Graceful Shutdown** | Handle SIGTERM, drain in-flight tasks |
 
 ---
 
@@ -992,22 +1031,16 @@ Benefits:
 
 ### Exercise 1: Add Parallel Execution
 
-Extend the orchestrator to process multiple tasks in parallel:
-
 ```python
+from concurrent.futures import ThreadPoolExecutor
+
 class ParallelOrchestrator(Orchestrator):
     def __init__(self, *args, max_workers: int = 3, **kwargs):
         super().__init__(*args, **kwargs)
         self.max_workers = max_workers
-
-    def run(self):
-        # Use ThreadPoolExecutor or asyncio
-        pass
 ```
 
 ### Exercise 2: Add Priority Queue
-
-Implement priority-based task selection:
 
 ```python
 class PriorityTaskStore(TaskStore):
@@ -1018,16 +1051,12 @@ class PriorityTaskStore(TaskStore):
 
 ### Exercise 3: Add Checkpointing
 
-Save orchestrator state for resume after crash:
-
 ```python
 class CheckpointingOrchestrator(Orchestrator):
     def save_checkpoint(self):
-        # Save current state to disk
         pass
 
     def restore_checkpoint(self):
-        # Restore state from disk
         pass
 ```
 
@@ -1036,11 +1065,11 @@ class CheckpointingOrchestrator(Orchestrator):
 ## Checkpoint
 
 Before moving on, verify:
-- [ ] Orchestrator processes tasks end-to-end
-- [ ] Verification gates task completion
+- [ ] Orchestrator runs with fake components (no API key)
+- [ ] Tasks go through: PENDING → IN_PROGRESS → COMPLETED/FAILED
+- [ ] Retries work (task requeued when verification fails)
 - [ ] Circuit breaker stops runaway loops
 - [ ] Hooks fire at correct lifecycle points
-- [ ] Builder pattern creates valid orchestrators
 
 ---
 
@@ -1048,12 +1077,7 @@ Before moving on, verify:
 
 > Orchestrators compose smaller pieces into reliable workflows.
 
-A well-designed orchestrator:
-- **Separates concerns** with clear interfaces
-- **Enables testing** via dependency injection
-- **Provides visibility** through hooks and stats
-- **Ensures reliability** with verification and safety checks
-- **Scales cleanly** through pluggable components
+Start with the smallest loop, add one feature at a time, and keep the hardening checklist handy for when you go to production.
 
 ---
 
