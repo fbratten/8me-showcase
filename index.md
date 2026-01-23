@@ -26,21 +26,12 @@ You get **reliable automation**.
 
 ## Start Learning
 
-<div class="learning-paths">
-
-### 🚀 Quick Start
-New to loops? [Your First Loop Tutorial](./docs/tutorials/first-loop.md) takes 15 minutes.
-
-### 📚 Concepts
-Understand the theory: [Orchestration Concepts](./docs/concepts/)
-
-### 🧪 Labs
-Hands-on practice: [Lab Curriculum](./labs/index.md) (15 progressive labs)
-
-### 💻 Code
-Working implementations: [8me Repository](https://github.com/fbratten/8me)
-
-</div>
+| | |
+|---|---|
+| **🚀 Quick Start** | New to loops? [Your First Loop Tutorial](./docs/tutorials/first-loop.md) |
+| **📚 Concepts** | Understand the theory: [Orchestration Concepts](./docs/concepts/) |
+| **🧪 Labs** | Hands-on practice: [Lab Curriculum](./labs/index.md) (15 progressive labs) |
+| **💻 Code** | Working implementations: [8me Repository](https://github.com/fbratten/8me) |
 
 ## Tier Overview
 
@@ -74,7 +65,4 @@ A musical tribute to context engineering and autonomous loops.
 
 ---
 
-<div class="cta-buttons">
-  <a href="./docs/tutorials/first-loop.md" class="button primary">Start Learning →</a>
-  <a href="https://github.com/fbratten/8me" class="button secondary">View Code →</a>
-</div>
+[**Start Learning →**](./docs/tutorials/first-loop.md) · [**View Code →**](https://github.com/fbratten/8me)
