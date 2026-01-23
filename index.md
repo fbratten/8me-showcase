@@ -29,7 +29,7 @@ You get **reliable automation**.
 | | |
 |---|---|
 | **🚀 Quick Start** | New to loops? [Your First Loop Tutorial](./labs/01-first-loop.md) |
-| **📚 Concepts** | Understand the theory: [Orchestration Concepts](/concepts/) |
+| **📚 Concepts** | Understand the theory: [Orchestration Concepts](./concepts/) |
 | **🧪 Labs** | Hands-on practice: [Lab Curriculum](./labs/index.md) (15 progressive labs) |
 | **💻 Code** | Working implementations: [8me Repository](https://github.com/fbratten/8me) |
 

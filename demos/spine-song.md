@@ -55,5 +55,5 @@ The genre mix mirrors the coding experience - smooth flow punctuated by breakthr
 ---
 
 <div style="text-align: center; margin-top: 2rem;">
-  <a href="/" style="text-decoration: none;">&larr; Back to 8me Showcase</a>
+  <a href=".." style="text-decoration: none;">&larr; Back to 8me Showcase</a>
 </div>
