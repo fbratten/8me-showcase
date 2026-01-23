@@ -49,7 +49,7 @@ The genre mix mirrors the coding experience - smooth flow punctuated by breakthr
 ## Related Projects
 
 - [SPINE Framework](https://github.com/fbratten/spine) - Context engineering backbone
-- [8me Orchestration](/) - Ralph Wiggum autonomous loops
+- [8me Orchestration](../) - Ralph Wiggum autonomous loops
 - [Music Video Creator](https://fbratten.github.io/music-video-creator-showcase/) - Reactive audio visualizations
 
 ---
