@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Play Timeline - 8me Interactive Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+  body { background: #0f172a; }
+  .timeline-line { width: 3px; background: linear-gradient(to bottom, #3B82F6, #8B5CF6, #10B981); }
+  .round-card {
+    opacity: 0; transform: translateY(40px);
+    transition: max-height 0.4s ease;
+  }
+  .round-card.visible { opacity: 1; transform: translateY(0); }
+  .round-dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 3px solid #1e293b; position: relative; z-index: 2;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .round-dot:hover { transform: scale(1.3); }
+  .round-dot.major { box-shadow: 0 0 12px currentColor; }
+  .items-list { overflow: hidden; }
+  .score-bar { transition: width 1s ease-out; }
+  .score-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  }
+  .converged-badge {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: #fff; padding: 4px 14px; border-radius: 999px; font-size: 13px;
+    font-weight: 600; animation: pulse-glow 2s infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); }
+  }
+  .expand-btn {
+    cursor: pointer; user-select: none;
+    transition: color 0.2s;
+  }
+  .expand-btn:hover { color: #93c5fd; }
+</style>
+</head>
+<body class="min-h-screen font-sans text-slate-200">
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <nav class="mb-6">
+    <a href="https://fbratten.github.io/8me-showcase/" class="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">&larr; Back to 8me Showcase</a>
+  </nav>
+
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-white mb-2">Self-Play Design Timeline</h1>
+    <p class="text-slate-400 text-lg">Watch a proposer/critic conversation converge on an optimal design (Lab 11)</p>
+  </header>
+
+  <!-- Score Progression Bar -->
+  <div class="bg-slate-900/50 rounded-xl border border-slate-800 p-5 mb-8">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">Score Progression</h2>
+      <span id="final-score" class="text-sm text-slate-500"></span>
+    </div>
+    <div class="relative h-6 bg-slate-800 rounded-full overflow-hidden">
+      <div id="score-fill" class="score-bar h-full rounded-full" style="width:0%; background: linear-gradient(90deg, #EF4444, #F59E0B, #10B981);"></div>
+      <div class="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white" id="score-label"></div>
+    </div>
+    <div class="flex justify-between mt-1 text-xs text-slate-600">
+      <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="relative" id="timeline">
+    <!-- Vertical line -->
+    <div class="timeline-line absolute left-[28px] top-0 bottom-0"></div>
+
+    <div id="timeline-entries" class="space-y-6">
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="mt-10 bg-slate-900/50 rounded-xl border border-slate-800 p-6">
+    <h2 class="text-xl font-semibold text-white mb-3">About Self-Play</h2>
+    <div class="text-slate-400 text-sm leading-relaxed space-y-2">
+      <p>Self-play uses two roles -- <strong class="text-blue-400">Proposer</strong> and <strong class="text-purple-400">Critic</strong> -- running iteratively. The proposer generates a design, the critic scores and identifies gaps, and the proposer revises.</p>
+      <p>Convergence is reached when the score improvement drops below a threshold (here: less than 1 point). This prevents oscillation -- a key risk in self-play systems (Lab 11).</p>
+      <p>Scroll down to watch each round animate in, or click the expand/collapse buttons to explore details.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const timelineData = {
+  entries: [
+    { version: "Round 1", date: "00:00", title: "Initial Proposal", type: "major", score: 4,
+      items: ["Proposer suggests: Use a simple loop with retry", "Score: 4/10", "Critic: Missing verification step, no state persistence"] },
+    { version: "Round 2", date: "00:12", title: "Adding Verification", type: "minor", score: 6,
+      items: ["Proposer adds: JSON schema validation", "Score: 6/10", "Critic: Better, but no circuit breaker for infinite loops"] },
+    { version: "Round 3", date: "00:25", title: "Safety Mechanisms", type: "minor", score: 7,
+      items: ["Proposer adds: max_retries=3, timeout=30s", "Score: 7/10", "Critic: Good safety, but state lost on crash"] },
+    { version: "Round 4", date: "00:38", title: "State Persistence", type: "minor", score: 9,
+      items: ["Proposer adds: SQLite state store, resume on restart", "Score: 9/10", "Critic: Solid design, minor: add logging"] },
+    { version: "Round 5", date: "00:45", title: "Convergence Reached", type: "major", score: 9.5,
+      items: ["Proposer adds: structured JSON logging", "Score: 9.5/10", "CONVERGED: Score improvement < 1 point", "Final design ready for implementation"] }
+  ],
+  project_name: "Self-Play Design Session",
+  total_versions: 5
+};
+
+function getScoreColor(score) {
+  if (score >= 9) return '#10B981';
+  if (score >= 7) return '#F59E0B';
+  if (score >= 5) return '#F97316';
+  return '#EF4444';
+}
+
+function getDotColor(type) {
+  return type === 'major' ? '#8B5CF6' : '#3B82F6';
+}
+
+function buildTimeline() {
+  const container = document.getElementById('timeline-entries');
+  container.innerHTML = '';
+
+  timelineData.entries.forEach((entry, i) => {
+    const isConverged = entry.items.some(item => item.includes('CONVERGED'));
+    const dotColor = getDotColor(entry.type);
+
+    const card = document.createElement('div');
+    card.className = 'round-card flex gap-4 items-start';
+    card.dataset.index = i;
+    card.dataset.score = entry.score;
+
+    card.innerHTML = `
+      <div class="flex-shrink-0 flex flex-col items-center" style="width: 40px;">
+        <div class="round-dot ${entry.type}" style="background: ${dotColor}; color: ${dotColor};"></div>
+      </div>
+      <div class="flex-1 bg-slate-900/70 rounded-xl border border-slate-800 p-5 hover:border-slate-700 transition-colors">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-mono text-slate-500">${entry.date}</span>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded ${entry.type === 'major' ? 'bg-purple-900/50 text-purple-300' : 'bg-blue-900/50 text-blue-300'}">${entry.version}</span>
+            ${isConverged ? '<span class="converged-badge">CONVERGED</span>' : ''}
+          </div>
+          <div class="score-badge" style="background: ${getScoreColor(entry.score)}22; color: ${getScoreColor(entry.score)};">
+            ${entry.score}/10
+          </div>
+        </div>
+        <h3 class="text-lg font-semibold text-white mb-3">${entry.title}</h3>
+        <div class="expand-btn text-sm text-slate-400 mb-2" onclick="toggleItems(this)">
+          &#9660; Details
+        </div>
+        <div class="items-list" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
+          <ul class="space-y-2">
+            ${entry.items.map(item => {
+              let cls = 'text-slate-400';
+              let icon = '';
+              if (item.startsWith('Proposer')) { cls = 'text-blue-300'; icon = '<span class="text-blue-500 mr-1">P</span>'; }
+              else if (item.startsWith('Critic')) { cls = 'text-purple-300'; icon = '<span class="text-purple-500 mr-1">C</span>'; }
+              else if (item.startsWith('Score')) { cls = 'text-amber-300 font-semibold'; }
+              else if (item.startsWith('CONVERGED')) { cls = 'text-green-400 font-bold'; icon = '&#10003; '; }
+              return `<li class="text-sm ${cls}">${icon}${item}</li>`;
+            }).join('')}
+          </ul>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function toggleItems(btn) {
+  const list = btn.nextElementSibling;
+  if (list.style.maxHeight === '0px' || !list.style.maxHeight) {
+    list.style.maxHeight = list.scrollHeight + 'px';
+    btn.innerHTML = '&#9650; Hide Details';
+  } else {
+    list.style.maxHeight = '0px';
+    btn.innerHTML = '&#9660; Details';
+  }
+}
+
+let lastRevealedScore = 0;
+
+function updateScoreBar(score) {
+  const pct = (score / 10) * 100;
+  document.getElementById('score-fill').style.width = pct + '%';
+  document.getElementById('score-label').textContent = score + ' / 10';
+  if (score >= 9.5) {
+    document.getElementById('final-score').textContent = 'Converged!';
+    document.getElementById('final-score').className = 'text-sm text-green-400 font-semibold';
+  }
+}
+
+function handleScroll() {
+  const cards = document.querySelectorAll('.round-card');
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.8 && !card.classList.contains('visible')) {
+      card.classList.add('visible');
+      const score = parseFloat(card.dataset.score);
+      anime({
+        targets: card,
+        opacity: [0, 1],
+        translateY: [40, 0],
+        duration: 600,
+        easing: 'easeOutCubic'
+      });
+      // Expand items automatically with slight delay
+      setTimeout(() => {
+        const btn = card.querySelector('.expand-btn');
+        if (btn) toggleItems(btn);
+      }, 400);
+      // Update score bar
+      if (score > lastRevealedScore) {
+        lastRevealedScore = score;
+        updateScoreBar(score);
+      }
+    }
+  });
+}
+
+buildTimeline();
+window.addEventListener('scroll', handleScroll);
+// Initial check
+setTimeout(handleScroll, 100);
+</script>
+</body>
+</html>

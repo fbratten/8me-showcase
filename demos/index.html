@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8me Interactive Demos - Learn AI Orchestration Visually</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+  body { background: #0f172a; }
+  .demo-card {
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .demo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .demo-card:hover .card-arrow { transform: translateX(4px); }
+  .card-arrow { transition: transform 0.3s; display: inline-block; }
+  .badge { padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+</style>
+</head>
+<body class="min-h-screen font-sans text-slate-200">
+
+<div class="max-w-4xl mx-auto px-4 py-12">
+  <!-- Header -->
+  <nav class="mb-8">
+    <a href="https://fbratten.github.io/8me-showcase/" class="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">&larr; Back to 8me Showcase</a>
+  </nav>
+
+  <header class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-white mb-3">8me Interactive Demos</h1>
+    <p class="text-xl text-slate-400 max-w-2xl mx-auto">Learn AI Orchestration Visually</p>
+    <p class="text-sm text-slate-500 mt-3 max-w-lg mx-auto">Explore the key patterns from 8me's 15-lab curriculum through interactive visualizations. Each demo is standalone and works in any modern browser.</p>
+  </header>
+
+  <!-- Demo Cards -->
+  <div class="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
+
+    <!-- Demo 1: Orchestrator Flow -->
+    <a href="orchestrator-flow/" class="demo-card block bg-slate-900/60 rounded-xl border border-slate-800 hover:border-blue-500/50 p-6">
+      <div class="flex items-start justify-between">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge bg-blue-900/60 text-blue-300">D3.js Sankey</span>
+            <span class="badge bg-slate-800 text-slate-400">Lab 08</span>
+          </div>
+          <h2 class="text-xl font-semibold text-white mb-2">Orchestrator Task Flow</h2>
+          <p class="text-slate-400 text-sm leading-relaxed">Sankey diagram showing how 100 tasks flow through the orchestrator pipeline -- from user request through task routing, execution, verification, retry, and circuit breaker stages. Animated particles trace the flow paths.</p>
+          <div class="flex gap-4 mt-4 text-xs text-slate-500">
+            <span>Animated flow</span>
+            <span>Hover details</span>
+            <span>Real-time stats</span>
+          </div>
+        </div>
+        <div class="text-slate-600 text-2xl ml-4 mt-2"><span class="card-arrow">&rarr;</span></div>
+      </div>
+    </a>
+
+    <!-- Demo 2: Self-Play Timeline -->
+    <a href="self-play-timeline/" class="demo-card block bg-slate-900/60 rounded-xl border border-slate-800 hover:border-purple-500/50 p-6">
+      <div class="flex items-start justify-between">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge bg-purple-900/60 text-purple-300">Anime.js</span>
+            <span class="badge bg-slate-800 text-slate-400">Lab 11</span>
+          </div>
+          <h2 class="text-xl font-semibold text-white mb-2">Self-Play Design Timeline</h2>
+          <p class="text-slate-400 text-sm leading-relaxed">Animated timeline of a proposer/critic self-play conversation. Watch 5 rounds of iterative refinement as the design score climbs from 4/10 to 9.5/10 and convergence is reached. Scroll-triggered animations reveal each round.</p>
+          <div class="flex gap-4 mt-4 text-xs text-slate-500">
+            <span>Scroll animations</span>
+            <span>Expand/collapse</span>
+            <span>Score progression</span>
+          </div>
+        </div>
+        <div class="text-slate-600 text-2xl ml-4 mt-2"><span class="card-arrow">&rarr;</span></div>
+      </div>
+    </a>
+
+    <!-- Demo 3: Concept Map -->
+    <a href="concept-map/" class="demo-card block bg-slate-900/60 rounded-xl border border-slate-800 hover:border-cyan-500/50 p-6">
+      <div class="flex items-start justify-between">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge bg-cyan-900/60 text-cyan-300">Sigma.js</span>
+            <span class="badge bg-slate-800 text-slate-400">All Labs</span>
+          </div>
+          <h2 class="text-xl font-semibold text-white mb-2">Concept Dependency Map</h2>
+          <p class="text-slate-400 text-sm leading-relaxed">Interactive force-directed graph of 14 core concepts and their prerequisite/enablement relationships. Click nodes to see descriptions and lab references. Filter by group and search to explore the learning path.</p>
+          <div class="flex gap-4 mt-4 text-xs text-slate-500">
+            <span>Force layout</span>
+            <span>Click to inspect</span>
+            <span>Filter & search</span>
+          </div>
+        </div>
+        <div class="text-slate-600 text-2xl ml-4 mt-2"><span class="card-arrow">&rarr;</span></div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-12 text-center text-sm text-slate-600">
+    <p>Part of the <a href="https://fbratten.github.io/8me-showcase/" class="text-cyan-500 hover:text-cyan-400">8me Showcase</a> -- AI agent orchestration education</p>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -77,6 +77,18 @@ This repository contains **educational content** with links to the **code reposi
 - Lab 14: Claude Code Skill Development
 - Lab 15: End-to-End Workflow
 
+## Interactive Demos
+
+Explore key 8me concepts through standalone interactive visualizations:
+
+| Demo | Technology | Lab | Description |
+|------|-----------|-----|-------------|
+| [Orchestrator Task Flow](./demos/orchestrator-flow/) | D3.js Sankey | Lab 08 | Sankey diagram of task routing through execution, verification, retry, and circuit breaker stages |
+| [Self-Play Timeline](./demos/self-play-timeline/) | Anime.js | Lab 11 | Animated proposer/critic conversation showing 5 rounds of iterative design convergence |
+| [Concept Dependency Map](./demos/concept-map/) | Sigma.js | All | Interactive force-directed graph of 14 core concepts and their prerequisite relationships |
+
+**[Browse all demos](./demos/)** -- each demo is a self-contained HTML file that works independently of Jekyll.
+
 ## Philosophy
 
 > "Loop persistently until the job is done."

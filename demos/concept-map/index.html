@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concept Map - 8me Interactive Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/graphology-layout-forceatlas2@0.10.1/dist/graphology-layout-forceatlas2.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+  body { background: #0f172a; }
+  #sigma-container {
+    width: 100%; height: 550px; border-radius: 12px; overflow: hidden;
+    background: #0d1424; border: 1px solid #1e293b;
+  }
+  .group-btn {
+    padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    border: 2px solid; cursor: pointer; transition: all 0.2s;
+    background: transparent; opacity: 0.7;
+  }
+  .group-btn:hover, .group-btn.active { opacity: 1; transform: scale(1.05); }
+  .group-btn.active { background: currentColor; }
+  .group-btn.active span { color: #0f172a; }
+  .info-panel {
+    background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+    padding: 20px; transition: opacity 0.3s, transform 0.3s;
+  }
+  .edge-label { font-size: 11px; color: #64748b; }
+  #search-input {
+    background: #1e293b; border: 1px solid #334155; color: #e2e8f0;
+    border-radius: 8px; padding: 8px 14px; font-size: 14px; width: 100%;
+    outline: none; transition: border-color 0.2s;
+  }
+  #search-input:focus { border-color: #3B82F6; }
+  #search-input::placeholder { color: #475569; }
+</style>
+</head>
+<body class="min-h-screen font-sans text-slate-200">
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <nav class="mb-6">
+    <a href="https://fbratten.github.io/8me-showcase/" class="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">&larr; Back to 8me Showcase</a>
+  </nav>
+
+  <header class="mb-6">
+    <h1 class="text-3xl font-bold text-white mb-2">Concept Dependency Map</h1>
+    <p class="text-slate-400 text-lg">Interactive knowledge graph showing how 8me concepts build on each other</p>
+  </header>
+
+  <!-- Controls -->
+  <div class="flex flex-col md:flex-row gap-4 mb-6">
+    <div class="flex-1">
+      <input type="text" id="search-input" placeholder="Search concepts..." autocomplete="off">
+    </div>
+    <div class="flex flex-wrap gap-2 items-center" id="group-filters">
+      <button class="group-btn active" data-group="all" style="color: #94a3b8; border-color: #94a3b8;" onclick="filterGroup('all', this)"><span>All</span></button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Graph -->
+    <div class="lg:col-span-2">
+      <div id="sigma-container"></div>
+    </div>
+
+    <!-- Info Panel -->
+    <div>
+      <div id="info-panel" class="info-panel">
+        <h3 class="text-lg font-semibold text-white mb-2" id="info-title">Click a concept</h3>
+        <p class="text-sm text-slate-400 mb-4" id="info-desc">Select any node in the graph to see its details, group, and connections.</p>
+        <div id="info-connections" class="space-y-2"></div>
+      </div>
+
+      <!-- Legend -->
+      <div class="info-panel mt-4">
+        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3">Edge Types</h3>
+        <div class="space-y-1 text-sm">
+          <div class="flex items-center gap-2"><span class="w-8 h-0.5 bg-blue-500 inline-block"></span> <span class="text-slate-400">REQUIRES (prerequisite)</span></div>
+          <div class="flex items-center gap-2"><span class="w-8 h-0.5 bg-green-500 inline-block"></span> <span class="text-slate-400">ENABLES (unlocks)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="mt-8 bg-slate-900/50 rounded-xl border border-slate-800 p-6">
+    <h2 class="text-xl font-semibold text-white mb-3">Reading the Map</h2>
+    <div class="text-slate-400 text-sm leading-relaxed space-y-2">
+      <p>Nodes represent core concepts taught across 8me's 15 labs. Node size reflects how many other concepts depend on it.</p>
+      <p><strong class="text-blue-400">REQUIRES</strong> edges mean you need to understand the source before the target. <strong class="text-green-400">ENABLES</strong> edges show what new capabilities each concept unlocks.</p>
+      <p>Start from the <strong class="text-blue-300">foundation</strong> group (loop-pattern, verification) and follow edges outward to see the full learning path.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const graphData = {
+  nodes: [
+    { id: "loop-pattern",     label: "Loop Pattern",       group: "foundation",     size: 20, desc: "The core Ralph Loop: execute, verify, retry. Foundation of all 8me patterns.", lab: "Lab 01" },
+    { id: "verification",     label: "Verification",       group: "foundation",     size: 15, desc: "External verification of AI outputs. Never trust self-assessment alone.", lab: "Lab 03" },
+    { id: "circuit-breakers", label: "Circuit Breakers",   group: "safety",         size: 12, desc: "Safety mechanisms that cap retries and prevent infinite loops.", lab: "Lab 06" },
+    { id: "state-management", label: "State Management",   group: "infrastructure", size: 14, desc: "External state persistence using JSON files or SQLite for crash recovery.", lab: "Lab 02" },
+    { id: "tool-calling",     label: "Tool Calling",       group: "execution",      size: 10, desc: "Structured tool invocation patterns for AI agents.", lab: "Lab 05" },
+    { id: "self-play",        label: "Self-Play",          group: "advanced",       size: 12, desc: "Proposer/critic loop for design convergence. Requires oscillation controls.", lab: "Lab 11" },
+    { id: "gating",           label: "Gating",             group: "safety",         size: 10, desc: "Quality gates that block progression until criteria are met.", lab: "Lab 10" },
+    { id: "drift-prevention", label: "Drift Prevention",   group: "safety",         size: 8,  desc: "Techniques to keep agents on-task and prevent goal drift over iterations.", lab: "Lab 10" },
+    { id: "multi-agent",      label: "Multi-Agent",        group: "advanced",       size: 16, desc: "Coordinating multiple AI agents with role specialization.", lab: "Lab 09" },
+    { id: "orchestrator",     label: "Orchestrator",       group: "advanced",       size: 18, desc: "Central coordinator managing task routing, state, and agent lifecycle.", lab: "Lab 08" },
+    { id: "memory",           label: "Memory",             group: "infrastructure", size: 12, desc: "Persistent knowledge storage for agent learning across sessions.", lab: "Lab 12" },
+    { id: "mcp-server",       label: "MCP Server",         group: "integration",    size: 14, desc: "Model Context Protocol server exposing tools to Claude.", lab: "Lab 13" },
+    { id: "spine",            label: "SPINE",              group: "integration",    size: 16, desc: "Project scaffolding framework integrating memory, MCP, and orchestration.", lab: "Lab 15" },
+    { id: "minna",            label: "Minna",              group: "integration",    size: 10, desc: "SQLite-backed memory system for entity and relationship tracking.", lab: "Lab 12" }
+  ],
+  edges: [
+    { source: "loop-pattern",     target: "verification",     type: "REQUIRES" },
+    { source: "loop-pattern",     target: "state-management", type: "REQUIRES" },
+    { source: "verification",     target: "circuit-breakers", type: "REQUIRES" },
+    { source: "state-management", target: "tool-calling",     type: "ENABLES" },
+    { source: "circuit-breakers", target: "gating",           type: "ENABLES" },
+    { source: "circuit-breakers", target: "drift-prevention", type: "ENABLES" },
+    { source: "verification",     target: "self-play",        type: "REQUIRES" },
+    { source: "tool-calling",     target: "orchestrator",     type: "REQUIRES" },
+    { source: "gating",           target: "orchestrator",     type: "REQUIRES" },
+    { source: "multi-agent",      target: "orchestrator",     type: "REQUIRES" },
+    { source: "orchestrator",     target: "memory",           type: "ENABLES" },
+    { source: "memory",           target: "minna",            type: "ENABLES" },
+    { source: "orchestrator",     target: "mcp-server",       type: "ENABLES" },
+    { source: "mcp-server",       target: "spine",            type: "ENABLES" }
+  ],
+  groups: {
+    foundation:     { color: "#3B82F6", label: "Foundation" },
+    safety:         { color: "#EF4444", label: "Safety" },
+    execution:      { color: "#10B981", label: "Execution" },
+    advanced:       { color: "#8B5CF6", label: "Advanced" },
+    infrastructure: { color: "#F59E0B", label: "Infrastructure" },
+    integration:    { color: "#06B6D4", label: "Integration" }
+  }
+};
+
+// Build group filter buttons
+const filtersEl = document.getElementById('group-filters');
+Object.entries(graphData.groups).forEach(([key, g]) => {
+  const btn = document.createElement('button');
+  btn.className = 'group-btn active';
+  btn.dataset.group = key;
+  btn.style.color = g.color;
+  btn.style.borderColor = g.color;
+  btn.innerHTML = `<span>${g.label}</span>`;
+  btn.onclick = function() { filterGroup(key, this); };
+  filtersEl.appendChild(btn);
+});
+
+// Create graph
+const Graph = graphology.Graph;
+const graph = new Graph();
+
+// Add nodes with initial positions in a circle
+const n = graphData.nodes.length;
+graphData.nodes.forEach((node, i) => {
+  const angle = (2 * Math.PI * i) / n;
+  const r = 5;
+  graph.addNode(node.id, {
+    label: node.label,
+    x: r * Math.cos(angle),
+    y: r * Math.sin(angle),
+    size: node.size * 0.6,
+    color: graphData.groups[node.group].color,
+    group: node.group,
+    desc: node.desc,
+    lab: node.lab,
+    originalColor: graphData.groups[node.group].color
+  });
+});
+
+graphData.edges.forEach((edge, i) => {
+  graph.addEdge(edge.source, edge.target, {
+    color: edge.type === 'REQUIRES' ? '#3B82F680' : '#10B98180',
+    size: 2,
+    type: edge.type,
+    originalColor: edge.type === 'REQUIRES' ? '#3B82F680' : '#10B98180'
+  });
+});
+
+// Apply ForceAtlas2 layout
+const fa2 = graphologyLayoutForceAtlas2;
+const sensibleSettings = fa2.inferSettings(graph);
+fa2.assign(graph, { iterations: 100, settings: { ...sensibleSettings, gravity: 1, barnesHutOptimize: true } });
+
+// Render with Sigma
+const container = document.getElementById('sigma-container');
+const renderer = new Sigma(graph, container, {
+  renderLabels: true,
+  labelColor: { color: '#e2e8f0' },
+  labelFont: 'Inter',
+  labelSize: 12,
+  labelWeight: '500',
+  defaultEdgeType: 'arrow',
+  enableEdgeEvents: false,
+  labelDensity: 0.15,
+  labelGridCellSize: 100,
+  labelRenderedSizeThreshold: 4,
+  zIndex: true
+});
+
+// Click handler
+let selectedNode = null;
+
+renderer.on('clickNode', ({ node }) => {
+  selectedNode = node;
+  highlightNode(node);
+  showInfo(node);
+});
+
+renderer.on('clickStage', () => {
+  selectedNode = null;
+  resetHighlight();
+  resetInfo();
+});
+
+function highlightNode(nodeId) {
+  const neighbors = new Set(graph.neighbors(nodeId));
+  neighbors.add(nodeId);
+
+  graph.forEachNode((n, attrs) => {
+    if (neighbors.has(n)) {
+      graph.setNodeAttribute(n, 'color', attrs.originalColor);
+      graph.setNodeAttribute(n, 'zIndex', 1);
+    } else {
+      graph.setNodeAttribute(n, 'color', '#1e293b');
+      graph.setNodeAttribute(n, 'zIndex', 0);
+    }
+  });
+
+  graph.forEachEdge((e, attrs, src, tgt) => {
+    if ((src === nodeId || tgt === nodeId)) {
+      graph.setEdgeAttribute(e, 'color', attrs.originalColor.replace('80', 'cc'));
+      graph.setEdgeAttribute(e, 'size', 3);
+    } else {
+      graph.setEdgeAttribute(e, 'color', '#1e293b30');
+      graph.setEdgeAttribute(e, 'size', 1);
+    }
+  });
+
+  renderer.refresh();
+}
+
+function resetHighlight() {
+  graph.forEachNode((n, attrs) => {
+    graph.setNodeAttribute(n, 'color', attrs.originalColor);
+    graph.setNodeAttribute(n, 'zIndex', 0);
+  });
+  graph.forEachEdge((e, attrs) => {
+    graph.setEdgeAttribute(e, 'color', attrs.originalColor);
+    graph.setEdgeAttribute(e, 'size', 2);
+  });
+  renderer.refresh();
+}
+
+function showInfo(nodeId) {
+  const attrs = graph.getNodeAttributes(nodeId);
+  document.getElementById('info-title').textContent = attrs.label;
+  document.getElementById('info-desc').innerHTML = `
+    <span class="inline-block px-2 py-0.5 rounded text-xs font-semibold mb-2" style="background: ${attrs.originalColor}22; color: ${attrs.originalColor};">${attrs.group}</span>
+    <span class="inline-block px-2 py-0.5 rounded text-xs font-semibold mb-2 bg-slate-800 text-slate-300">${attrs.lab}</span>
+    <br>${attrs.desc}
+  `;
+
+  const connEl = document.getElementById('info-connections');
+  connEl.innerHTML = '';
+
+  // Prerequisites (incoming edges)
+  const incoming = [];
+  const outgoing = [];
+  graph.forEachEdge(nodeId, (e, eAttrs, src, tgt) => {
+    if (tgt === nodeId) {
+      incoming.push({ node: src, type: eAttrs.type });
+    } else {
+      outgoing.push({ node: tgt, type: eAttrs.type });
+    }
+  });
+
+  if (incoming.length) {
+    connEl.innerHTML += `<h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-3">Prerequisites</h4>`;
+    incoming.forEach(c => {
+      const nAttrs = graph.getNodeAttributes(c.node);
+      connEl.innerHTML += `<div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-full" style="background:${nAttrs.originalColor}"></span><span class="text-slate-300">${nAttrs.label}</span><span class="text-xs text-slate-600">${c.type}</span></div>`;
+    });
+  }
+
+  if (outgoing.length) {
+    connEl.innerHTML += `<h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-3">Enables</h4>`;
+    outgoing.forEach(c => {
+      const nAttrs = graph.getNodeAttributes(c.node);
+      connEl.innerHTML += `<div class="flex items-center gap-2 text-sm"><span class="w-2 h-2 rounded-full" style="background:${nAttrs.originalColor}"></span><span class="text-slate-300">${nAttrs.label}</span><span class="text-xs text-slate-600">${c.type}</span></div>`;
+    });
+  }
+}
+
+function resetInfo() {
+  document.getElementById('info-title').textContent = 'Click a concept';
+  document.getElementById('info-desc').textContent = 'Select any node in the graph to see its details, group, and connections.';
+  document.getElementById('info-connections').innerHTML = '';
+}
+
+// Group filter
+let activeGroups = new Set(['all']);
+
+function filterGroup(group, btn) {
+  if (group === 'all') {
+    activeGroups = new Set(['all']);
+    document.querySelectorAll('.group-btn').forEach(b => b.classList.add('active'));
+  } else {
+    activeGroups.delete('all');
+    document.querySelector('.group-btn[data-group="all"]').classList.remove('active');
+
+    if (activeGroups.has(group)) {
+      activeGroups.delete(group);
+      btn.classList.remove('active');
+    } else {
+      activeGroups.add(group);
+      btn.classList.add('active');
+    }
+
+    if (activeGroups.size === 0) {
+      activeGroups = new Set(['all']);
+      document.querySelectorAll('.group-btn').forEach(b => b.classList.add('active'));
+    }
+  }
+
+  const showAll = activeGroups.has('all');
+  graph.forEachNode((n, attrs) => {
+    const visible = showAll || activeGroups.has(attrs.group);
+    graph.setNodeAttribute(n, 'hidden', !visible);
+    graph.setNodeAttribute(n, 'color', visible ? attrs.originalColor : '#1e293b');
+  });
+
+  graph.forEachEdge((e, attrs, src, tgt) => {
+    const srcVisible = !graph.getNodeAttribute(src, 'hidden');
+    const tgtVisible = !graph.getNodeAttribute(tgt, 'hidden');
+    graph.setEdgeAttribute(e, 'hidden', !(srcVisible && tgtVisible));
+  });
+
+  renderer.refresh();
+}
+
+// Search
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase().trim();
+  if (!query) {
+    resetHighlight();
+    return;
+  }
+
+  const matches = new Set();
+  graph.forEachNode((n, attrs) => {
+    if (attrs.label.toLowerCase().includes(query) || attrs.desc.toLowerCase().includes(query)) {
+      matches.add(n);
+    }
+  });
+
+  graph.forEachNode((n, attrs) => {
+    if (matches.has(n)) {
+      graph.setNodeAttribute(n, 'color', attrs.originalColor);
+      graph.setNodeAttribute(n, 'zIndex', 1);
+    } else {
+      graph.setNodeAttribute(n, 'color', '#1e293b');
+      graph.setNodeAttribute(n, 'zIndex', 0);
+    }
+  });
+
+  graph.forEachEdge((e, attrs, src, tgt) => {
+    if (matches.has(src) || matches.has(tgt)) {
+      graph.setEdgeAttribute(e, 'color', attrs.originalColor);
+    } else {
+      graph.setEdgeAttribute(e, 'color', '#1e293b30');
+    }
+  });
+
+  renderer.refresh();
+
+  if (matches.size === 1) {
+    const nodeId = [...matches][0];
+    showInfo(nodeId);
+  }
+});
+</script>
+</body>
+</html>
