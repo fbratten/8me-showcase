@@ -10,6 +10,10 @@ url: "https://fbratten.github.io"
 remote_theme: just-the-docs/just-the-docs
 color_scheme: dark
 
+# Mermaid diagram support
+mermaid:
+  version: "11"
+
 # Search
 search_enabled: true
 search:
