@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/graphology-layout-forceatlas2@0.10.1/dist/graphology-layout-forceatlas2.min.js"></script>
+<script src="https://unpkg.com/graphology@0.25.4/dist/graphology.umd.min.js"></script>
+<script src="https://unpkg.com/sigma@2.4.0/build/sigma.min.js"></script>
+<script src="https://unpkg.com/graphology-layout-forceatlas2@0.10.1/dist/graphology-layout-forceatlas2.min.js"></script>
 <script>
 tailwind.config = {
   theme: {
@@ -108,6 +108,14 @@ tailwind.config = {
 </div>
 
 <script>
+if (typeof graphology === 'undefined' || typeof Sigma === 'undefined') {
+    document.getElementById('sigma-container').innerHTML =
+        '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#e2e8f0;text-align:center;padding:2rem;">'+
+        '<div><p style="color:#f87171;font-weight:700;margin-bottom:0.5rem;">Failed to load graph libraries</p>'+
+        '<p style="color:#64748b;font-size:0.875rem;">Sigma.js or Graphology CDN unavailable. Try refreshing.</p></div></div>';
+    throw new Error('Missing Sigma.js or Graphology');
+}
+
 const graphData = {
   nodes: [
     { id: "loop-pattern",     label: "Loop Pattern",       group: "foundation",     size: 20, desc: "The core Ralph Loop: execute, verify, retry. Foundation of all 8me patterns.", lab: "Lab 01" },
