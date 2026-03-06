@@ -108,17 +108,31 @@ user_proxy.initiate_chat(assistant, message="Write fibonacci")
 
 ## Decision Tree
 
-```
-Do you need multi-agent?
-├─ No → Do you need RAG?
-│       ├─ Yes → Haystack
-│       └─ No → Simple loop (8me Tier 0-1)
-│
-└─ Yes → Do agents need to debate?
-         ├─ Yes → AutoGen or SPINE
-         └─ No → Do you need role-based teams?
-                 ├─ Yes → CrewAI
-                 └─ No → LangGraph
+```mermaid
+graph TB
+    Q1{"Do you need<br/>multi-agent?"}:::primary
+    Q2{"Do you need RAG?"}:::secondary
+    Q3{"Do agents need<br/>to debate?"}:::secondary
+    Q4{"Do you need<br/>role-based teams?"}:::secondary
+
+    A1["Haystack"]:::tertiary
+    A2["Simple loop<br/>(8me Tier 0-1)"]:::tertiary
+    A3["AutoGen or SPINE"]:::tertiary
+    A4["CrewAI"]:::tertiary
+    A5["LangGraph"]:::tertiary
+
+    Q1 -- No --> Q2
+    Q1 -- Yes --> Q3
+    Q2 -- Yes --> A1
+    Q2 -- No --> A2
+    Q3 -- Yes --> A3
+    Q3 -- No --> Q4
+    Q4 -- Yes --> A4
+    Q4 -- No --> A5
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
 ```
 
 ---

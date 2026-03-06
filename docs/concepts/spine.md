@@ -35,31 +35,32 @@ SPINE (Software Project Intelligence & Navigation Engine) focuses on **context e
 
 SPINE manages context as layered stacks:
 
-```
-┌───────────────────────────────────────────┐
-│ System Context (base personality/rules)   │ L1
-└───────────────────────────────────────────┘
-                    ▲
-┌───────────────────────────────────────────┐
-│ Project Context (CLAUDE.md, structure)    │ L2
-└───────────────────────────────────────────┘
-                    ▲
-┌───────────────────────────────────────────┐
-│ Task Context (current goal, constraints)  │ L3
-└───────────────────────────────────────────┘
-                    ▲
-┌───────────────────────────────────────────┐
-│ History Context (recent actions, state)   │ L4
-└───────────────────────────────────────────┘
+```mermaid
+graph TB
+    L4["L4: History Context<br/>(recent actions, state)"]:::accent
+    L3["L3: Task Context<br/>(current goal, constraints)"]:::tertiary
+    L2["L2: Project Context<br/>(CLAUDE.md, structure)"]:::secondary
+    L1["L1: System Context<br/>(base personality/rules)"]:::primary
+
+    L4 --> L3 --> L2 --> L1
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
+    classDef accent fill:#f59e0b,color:#000
 ```
 
 ---
 
 ## DIALECTIC Methodology
 
-```
-    THESIS ──────────► ANTITHESIS ──────────► SYNTHESIS
-    (Propose)           (Critique)             (Merge)
+```mermaid
+graph LR
+    T["THESIS<br/>Propose"]:::primary --> A["ANTITHESIS<br/>Critique"]:::secondary --> S["SYNTHESIS<br/>Merge"]:::tertiary
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
 ```
 
 Three phases per round:

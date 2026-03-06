@@ -16,26 +16,26 @@ Keeping agents aligned with original intent over multiple iterations.
 
 Over many iterations, agents can drift from the original goal:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                 Drift Prevention Pattern                │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│    Original Intent ──────────────────────────────►     │
-│          │                                              │
-│          │    Iteration 1    Iteration 2    Iteration 3│
-│          │        │              │              │       │
-│          │        ▼              ▼              ▼       │
-│          │    ┌───────┐     ┌───────┐     ┌───────┐    │
-│          └───►│ CHECK │────►│ CHECK │────►│ CHECK │    │
-│               │ DRIFT │     │ DRIFT │     │ DRIFT │    │
-│               └───┬───┘     └───┬───┘     └───┬───┘    │
-│                   │             │             │         │
-│              OK ──┘        DRIFT ─► REALIGN   │         │
-│                                               │         │
-│                                          COMPLETE       │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    INTENT["Original Intent"]:::primary
+    C1["CHECK DRIFT<br/>Iteration 1"]:::secondary
+    C2["CHECK DRIFT<br/>Iteration 2"]:::secondary
+    C3["CHECK DRIFT<br/>Iteration 3"]:::secondary
+    REALIGN["REALIGN"]:::accent
+    COMPLETE["COMPLETE"]:::tertiary
+
+    INTENT --> C1
+    C1 -- OK --> C2
+    C2 -- DRIFT --> REALIGN
+    REALIGN --> C2
+    C2 -- OK --> C3
+    C3 --> COMPLETE
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
+    classDef accent fill:#f59e0b,color:#000
 ```
 
 ---

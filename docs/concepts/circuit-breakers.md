@@ -96,22 +96,20 @@ while True:
 
 ## Circuit Breaker States
 
-```
-     ┌─────────┐
-     │  CLOSED │ ←── Normal operation
-     └────┬────┘
-          │ failures exceed threshold
-          ▼
-     ┌─────────┐
-     │  OPEN   │ ←── Failing fast, not trying
-     └────┬────┘
-          │ after cooldown period
-          ▼
-     ┌─────────┐
-     │HALF-OPEN│ ←── Testing if recovered
-     └────┬────┘
-          │ success → CLOSED
-          │ failure → OPEN
+```mermaid
+stateDiagram-v2
+    CLOSED : CLOSED
+Normal operation
+    OPEN : OPEN
+Failing fast, not trying
+    HALF_OPEN : HALF-OPEN
+Testing if recovered
+
+    [*] --> CLOSED
+    CLOSED --> OPEN : failures exceed threshold
+    OPEN --> HALF_OPEN : after cooldown period
+    HALF_OPEN --> CLOSED : success
+    HALF_OPEN --> OPEN : failure
 ```
 
 ### Implementation

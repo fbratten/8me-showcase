@@ -43,14 +43,26 @@ JSON-based task state management.
 
 ## State Transitions
 
-```
-pending ──► in_progress ──► completed
-                │
-                ▼
-            (retry) ──► pending
-                │
-                ▼
-              failed
+```mermaid
+stateDiagram-v2
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
+    classDef accent fill:#f59e0b,color:#000
+    classDef alert fill:#ef4444,color:#fff
+
+    [*] --> pending
+    pending --> in_progress
+    in_progress --> completed
+    in_progress --> retry
+    retry --> pending
+    retry --> failed
+
+    class pending primary
+    class in_progress accent
+    class completed tertiary
+    class retry secondary
+    class failed alert
 ```
 
 ---

@@ -122,20 +122,15 @@ current = await mcp_client.read_resource("task://current")
 
 ## State Transitions
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    State Transitions                     │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│   PENDING ──────► IN_PROGRESS ──────► REVIEW           │
-│      ▲                                   │              │
-│      │                          ┌────────┴────────┐     │
-│      │                          ▼                 ▼     │
-│      │                     COMPLETED           FAILED   │
-│      │                                           │      │
-│      └───────────── (retry) ─────────────────────┘      │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING
+    PENDING --> IN_PROGRESS
+    IN_PROGRESS --> REVIEW
+    REVIEW --> COMPLETED
+    REVIEW --> FAILED
+    FAILED --> PENDING : retry
+    COMPLETED --> [*]
 ```
 
 ---

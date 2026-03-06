@@ -14,36 +14,43 @@ Cross-session persistence for AI agents.
 
 ## The Session Continuity Problem
 
-```
-Without Memory:
-   Session 1          Session 2          Session 3
-   ┌─────────┐       ┌─────────┐       ┌─────────┐
-   │ Context │       │ ??????? │       │ ??????? │
-   │ Built   │       │ Lost!   │       │ Lost!   │
-   └─────────┘       └─────────┘       └─────────┘
+```mermaid
+graph LR
+    subgraph without ["Without Memory"]
+        direction LR
+        S1a["Session 1<br/>Context Built"]:::primary
+        S2a["Session 2<br/>??? Lost!"]:::alert
+        S3a["Session 3<br/>??? Lost!"]:::alert
+        S1a -.- S2a -.- S3a
+    end
 
-With Minna Memory:
-   Session 1          Session 2          Session 3
-   ┌─────────┐       ┌─────────┐       ┌─────────┐
-   │ Context │──────►│ Context │──────►│ Context │
-   │ + Store │       │ + Recall│       │ + Recall│
-   └─────────┘       └─────────┘       └─────────┘
-        │                 ▲                 ▲
-        └─────────────────┴─────────────────┘
-                    minna.db (SQLite)
+    subgraph withminna ["With Minna Memory"]
+        direction LR
+        S1b["Session 1<br/>Context + Store"]:::primary
+        S2b["Session 2<br/>Context + Recall"]:::tertiary
+        S3b["Session 3<br/>Context + Recall"]:::tertiary
+        DB[("minna.db<br/>SQLite")]:::accent
+        S1b --> S2b --> S3b
+        S1b --> DB
+        DB --> S2b
+        DB --> S3b
+    end
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
+    classDef alert fill:#ef4444,color:#fff
+    classDef accent fill:#f59e0b,color:#000
 ```
 
 ---
 
 ## Entity-Attribute-Value Model
 
-```
-ENTITY (what)     ATTRIBUTE (aspect)    VALUE (data)
-─────────────     ────────────────      ────────────
-"8me"             "purpose"             "Loop toolkit"
-"8me"             "tier1_status"        "COMPLETE"
-"user"            "prefers"             "dark mode"
-```
+| ENTITY (what) | ATTRIBUTE (aspect) | VALUE (data) |
+|---|---|---|
+| `8me` | `purpose` | `Loop toolkit` |
+| `8me` | `tier1_status` | `COMPLETE` |
+| `user` | `prefers` | `dark mode` |
 
 ---
 

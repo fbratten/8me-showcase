@@ -74,22 +74,18 @@ def multi_agent_swarm(task, agent_pool):
 
 Agents with defined roles collaborate:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   Role-Based Team                        │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│   ┌──────────┐    ┌──────────┐    ┌──────────┐        │
-│   │ PLANNER  │───►│IMPLEMENTER│───►│ REVIEWER │        │
-│   │          │    │          │    │          │        │
-│   │ Designs  │    │ Executes │    │ Validates│        │
-│   │ approach │    │ plan     │    │ quality  │        │
-│   └──────────┘    └──────────┘    └──────────┘        │
-│        │               │               │               │
-│        └───────────────┴───────────────┘               │
-│                    Feedback Loop                        │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    P["PLANNER<br/>Designs approach"]:::primary
+    I["IMPLEMENTER<br/>Executes plan"]:::secondary
+    R["REVIEWER<br/>Validates quality"]:::tertiary
+
+    P --> I --> R
+    R -- "Feedback Loop" --> P
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
 ```
 
 ---

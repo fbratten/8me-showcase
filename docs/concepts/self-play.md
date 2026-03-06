@@ -16,29 +16,27 @@ Internal debate patterns for quality assurance.
 
 Two "perspectives" debate until convergence:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Self-Play Pattern                    │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│    ┌──────────────┐         ┌──────────────┐           │
-│    │   PROPOSER   │◄───────►│   CRITIC     │           │
-│    │   "Build X"  │         │   "Check X"  │           │
-│    └──────┬───────┘         └───────┬──────┘           │
-│           │                         │                   │
-│           ▼                         ▼                   │
-│    ┌──────────────┐         ┌──────────────┐           │
-│    │   Proposal   │────────►│   Critique   │           │
-│    └──────────────┘         └──────┬───────┘           │
-│                                    │                    │
-│              ┌─────────────────────┴──────────────┐    │
-│              │                                    │    │
-│        APPROVED ▼                          REJECTED ▼   │
-│       ┌──────────────┐              ┌──────────────┐   │
-│       │   COMMIT     │              │   REFINE     │   │
-│       └──────────────┘              └──────────────┘   │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    PROPOSER["PROPOSER<br/>Build X"]:::primary
+    CRITIC["CRITIC<br/>Check X"]:::secondary
+    PROPOSAL["Proposal"]:::tertiary
+    CRITIQUE["Critique"]:::tertiary
+    COMMIT["COMMIT"]:::primary
+    REFINE["REFINE"]:::accent
+
+    PROPOSER <--> CRITIC
+    PROPOSER --> PROPOSAL
+    CRITIC --> CRITIQUE
+    PROPOSAL --> CRITIQUE
+    CRITIQUE -- APPROVED --> COMMIT
+    CRITIQUE -- REJECTED --> REFINE
+    REFINE --> PROPOSER
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
+    classDef accent fill:#f59e0b,color:#000
 ```
 
 ---
@@ -91,18 +89,21 @@ def self_play_orchestration(task, max_rounds=5):
 
 SPINE's self-play pattern uses thesis/antithesis/synthesis:
 
-```
-    THESIS ──────────► ANTITHESIS ──────────► SYNTHESIS
-    (Propose)           (Critique)             (Merge)
+```mermaid
+graph LR
+    T["THESIS<br/>Propose"]:::primary
+    A["ANTITHESIS<br/>Critique"]:::secondary
+    S["SYNTHESIS<br/>Merge"]:::tertiary
 
-    ┌─────────┐       ┌─────────┐       ┌─────────┐
-    │ Generate│──────►│ Challenge│──────►│ Resolve │
-    │ Solution│       │ Solution │       │ Conflict│
-    └─────────┘       └─────────┘       └─────────┘
-         │                 │                 │
-         ▼                 ▼                 ▼
-    "Here's my         "But what         "Final
-     approach"          about X?"        version"
+    T --> A --> S
+
+    T -.- T1["Generate Solution"]:::primary
+    A -.- A1["Challenge Solution"]:::secondary
+    S -.- S1["Resolve Conflict"]:::tertiary
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
 ```
 
 ---
@@ -111,18 +112,19 @@ SPINE's self-play pattern uses thesis/antithesis/synthesis:
 
 Alternating between perspectives to refine understanding:
 
-```
-    Round 1    Round 2    Round 3    Round 4
-    ┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐
-    │  A  │───►│  B  │───►│  A  │───►│  B  │──► ...
-    └─────┘    └─────┘    └─────┘    └─────┘
+```mermaid
+graph LR
+    R1["Round 1: A<br/>Expand / Explore / Diverge"]:::primary
+    R2["Round 2: B<br/>Contract / Focus / Converge"]:::secondary
+    R3["Round 3: A<br/>Expand / Explore / Diverge"]:::primary
+    R4["Round 4: B<br/>Contract / Focus / Converge"]:::secondary
+    MORE["..."]:::dark
 
-    Expand     Contract   Expand     Contract
-    Explore    Focus      Explore    Focus
-    Diverge    Converge   Diverge    Converge
+    R1 --> R2 --> R3 --> R4 --> MORE
 
-    ─────────────────────────────────────────►
-              Stability Increases
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef dark fill:#1e293b,color:#fff
 ```
 
 ---

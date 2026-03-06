@@ -16,22 +16,17 @@ Pre and post-condition enforcement with rollback.
 
 Nothing proceeds without passing gates:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Gating Pattern                       │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│    ┌──────────┐    ┌──────────┐    ┌──────────┐        │
-│    │ PRE-GATE │───►│ EXECUTE  │───►│POST-GATE │        │
-│    └────┬─────┘    └────┬─────┘    └────┬─────┘        │
-│         │               │               │               │
-│    FAIL │          FAIL │          FAIL │               │
-│         ▼               ▼               ▼               │
-│    ┌──────────┐    ┌──────────┐    ┌──────────┐        │
-│    │  REJECT  │    │ ROLLBACK │    │  REVERT  │        │
-│    └──────────┘    └──────────┘    └──────────┘        │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    PRE["PRE-GATE"]:::primary --> EXEC["EXECUTE"]:::secondary --> POST["POST-GATE"]:::tertiary
+    PRE -- FAIL --> REJECT["REJECT"]:::alert
+    EXEC -- FAIL --> ROLLBACK["ROLLBACK"]:::alert
+    POST -- FAIL --> REVERT["REVERT"]:::alert
+
+    classDef primary fill:#2563eb,color:#fff
+    classDef secondary fill:#7c3aed,color:#fff
+    classDef tertiary fill:#0d9488,color:#fff
+    classDef alert fill:#ef4444,color:#fff
 ```
 
 ---
